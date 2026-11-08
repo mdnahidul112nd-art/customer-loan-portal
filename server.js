@@ -17,6 +17,7 @@ const DATA_DIR = path.join(ROOT_DIR, 'data');
 const UPLOADS_DIR = path.join(ROOT_DIR, 'uploads');
 const CUSTOMERS_FILE = path.join(DATA_DIR, 'customers.json');
 const LOGOS_FILE = path.join(DATA_DIR, 'logos.json');
+const EXPIRED_TOKENS_FILE = path.join(DATA_DIR, 'expired_tokens.json');
 
 // Ensure directories exist
 [PUBLIC_DIR, ASSETS_DIR, DATA_DIR, UPLOADS_DIR].forEach(dir => {
@@ -278,31 +279,20 @@ app.post('/api/customers', checkAuth, (req, res) => {
 
 app.get('/api/customers/:token', (req, res) => {
   const { token } = req.params;
+  const expiredTokens = readJSON(EXPIRED_TOKENS_FILE, []);
+  if (expiredTokens.includes(token)) {
+    return res.json({ expired: true, message: 'This payment link has expired.' });
+  }
+
   const customers = readJSON(CUSTOMERS_FILE, []);
   let customer = customers.find(c => c.token === token || c.id === token);
 
   if (!customer) {
-    customer = {
-      id: 'demo_' + token,
-      token: token,
-      appName: 'Zen Money',
-      appLogo: '/assets/zen-money.svg',
-      customerName: 'BHAVIK KAMLESH SANGHVI',
-      repaymentAmount: 12540,
-      loanAmount: 11000,
-      receivedAmount: 11000,
-      bankAddress: 'HDFC BANK, ANDHERI (W), MUMBAI - 746388853(ifsc:UHDK84738)',
-      amountPaid: 0,
-      overdueDays: 2,
-      lateFee: 1540,
-      amountReceivedDate: '23-10-2026',
-      dueDate: '30-10-2026',
-      renewalDays: 7,
-      renewalFee: 4400,
-      upiId: 'Q609224859@ybl',
-      merchantName: 'Zen Money Pay',
-      status: 'Pending'
-    };
+    return res.json({ expired: true, message: 'This payment link has expired.' });
+  }
+
+  if (customer.isExpired || customer.status === 'Expired') {
+    return res.json({ expired: true, message: 'This payment link has expired.' });
   }
 
   const renewAmount = Math.round(customer.repaymentAmount * 0.4);
@@ -318,9 +308,22 @@ app.get('/api/customers/:token', (req, res) => {
 app.delete('/api/customers/:id', checkAuth, (req, res) => {
   const { id } = req.params;
   let customers = readJSON(CUSTOMERS_FILE, []);
+  const custToDelete = customers.find(c => c.id === id || c.token === id);
+
+  if (custToDelete) {
+    const expiredTokens = readJSON(EXPIRED_TOKENS_FILE, []);
+    if (!expiredTokens.includes(custToDelete.token)) {
+      expiredTokens.push(custToDelete.token);
+    }
+    if (!expiredTokens.includes(custToDelete.id)) {
+      expiredTokens.push(custToDelete.id);
+    }
+    writeJSON(EXPIRED_TOKENS_FILE, expiredTokens);
+  }
+
   customers = customers.filter(c => c.id !== id && c.token !== id);
   writeJSON(CUSTOMERS_FILE, customers);
-  return res.json({ success: true });
+  return res.json({ success: true, message: 'Customer link expired and deleted' });
 });
 
 app.post('/api/customers/:token/submit-utr', (req, res) => {
