@@ -285,170 +285,160 @@
     <div id="viewGateway" class="flex-1 flex flex-col" style="background:#f0eff5;">
 
       <!-- ── TOP BAR ──────────────────────────────────────────────────────────── -->
-      <!-- Screenshot 1: Pure white bar, bold "< " left arrow, centered bold "Repay" -->
-      <div style="background:#ffffff;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;border-bottom:1.5px solid #f0f0f0;">
-        <button id="backFromGatewayBtn" style="background:none;border:none;cursor:pointer;padding:4px 2px;line-height:1;display:flex;align-items:center;" title="Back">
-          <!-- Bold chevron left arrow, thick stroke -->
-          <svg width="24" height="24" fill="none" stroke="#111" stroke-width="2.5" viewBox="0 0 24 24">
+      <!-- Screenshot: Pure white bar, bold "< " left arrow, centered bold "Repay" -->
+      <div style="background:#ffffff;padding:11px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;border-bottom:1.5px solid #f0f0f0;">
+        <button id="backFromGatewayBtn" style="background:none;border:none;cursor:pointer;padding:3px 2px;line-height:1;display:flex;align-items:center;" title="Back">
+          <svg width="22" height="22" fill="none" stroke="#111" stroke-width="2.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
-        <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:20px;font-weight:800;color:#0d0d0d;margin:0;letter-spacing:0.2px;">Repay</h1>
-        <div style="width:28px;"></div>
+        <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:19px;font-weight:800;color:#0d0d0d;margin:0;letter-spacing:0.2px;">Repay</h1>
+        <div style="width:24px;"></div>
       </div>
 
       <!-- ── PURPLE TIMER BAR ─────────────────────────────────────────────────── -->
-      <!-- Screenshot 1: Deep purple #4a157c, clock icon, "6 : 51" spaced, हिंदी oval border -->
-      <div style="background:#4a157c;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;">
-        <div style="display:flex;align-items:center;gap:9px;">
-          <!-- Clock outline icon -->
-          <svg width="19" height="19" fill="none" stroke="#e2b8ff" stroke-width="2" viewBox="0 0 24 24">
+      <!-- Screenshot: Deep purple #4a157c, clock icon, "05 : 37" spaced, हिंदी oval border -->
+      <div style="background:#4a157c;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <svg width="18" height="18" fill="none" stroke="#e2b8ff" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10"/>
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l3.5 2"/>
           </svg>
-          <span id="countdownTimer" style="color:#ffffff;font-size:17px;font-weight:700;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:3px;">09 : 48</span>
+          <span id="countdownTimer" style="color:#ffffff;font-size:16px;font-weight:700;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:2.5px;">05 : 37</span>
         </div>
-        <!-- हिंदी: oval border pill, NOT filled, border only -->
-        <button style="background:transparent;border:1.8px solid #d4aaff;color:#e8d5ff;border-radius:999px;padding:4px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Segoe UI',Roboto,sans-serif;letter-spacing:0.3px;">हिंदी</button>
+        <button style="background:transparent;border:1.6px solid #d4aaff;color:#e8d5ff;border-radius:999px;padding:3px 13px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:'Segoe UI',Roboto,sans-serif;letter-spacing:0.3px;">हिंदी</button>
       </div>
 
       <!-- ── BIG AMOUNT ───────────────────────────────────────────────────────── -->
-      <!-- Screenshot 1: White bg, very large bold purple amount centered, no border -->
-      <div style="background:#ffffff;text-align:center;padding:22px 16px 20px;">
-        <h2 id="gatewayAmountDisplay" style="font-family:Georgia,'Times New Roman',serif;font-size:36px;font-weight:800;color:#4a157c;margin:0;letter-spacing:-0.5px;">₹ 17160.00</h2>
+      <!-- Screenshot: White bg, very large bold purple amount centered, no border -->
+      <div style="background:#ffffff;text-align:center;padding:14px 16px 12px;">
+        <h2 id="gatewayAmountDisplay" style="font-family:Georgia,'Times New Roman',serif;font-size:32px;font-weight:800;color:#4a157c;margin:0;letter-spacing:-0.4px;">₹ 12540.00</h2>
       </div>
 
       <!-- ── CARDS SCROLL AREA ────────────────────────────────────────────────── -->
-      <div style="padding:12px 11px 20px;display:flex;flex-direction:column;gap:12px;">
+      <div style="padding:10px 10px 18px;display:flex;flex-direction:column;gap:9px;">
 
         <!-- ━━━━ CARD 1: Scan QR Code to Pay ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <!-- Screenshot 2: Lavender header (#ede9fe), white/off-white body, NO inner border on QR -->
-        <div style="background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 1px 8px rgba(80,0,160,0.09);border:1px solid #e5dff5;">
+        <div style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 1px 6px rgba(80,0,160,0.07);border:1px solid #e5dff5;">
           <!-- Lavender header row -->
-          <div style="background:#eeeaf8;padding:13px 16px;display:flex;align-items:center;gap:10px;">
-            <!-- QR bracket-corner icon (exact screenshot) -->
-            <svg width="21" height="21" fill="none" stroke="#5b21b6" stroke-width="2.2" viewBox="0 0 24 24">
+          <div style="background:#eeeaf8;padding:10px 14px;display:flex;align-items:center;gap:9px;">
+            <svg width="19" height="19" fill="none" stroke="#5b21b6" stroke-width="2.2" viewBox="0 0 24 24">
               <path stroke-linecap="square" d="M4 9V5h4"/>
               <path stroke-linecap="square" d="M4 15v4h4"/>
               <path stroke-linecap="square" d="M20 9V5h-4"/>
               <path stroke-linecap="square" d="M20 15v4h-4"/>
             </svg>
-            <span style="font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:700;color:#2d1854;">Scan QR Code to Pay</span>
+            <span style="font-family:Georgia,'Times New Roman',serif;font-size:15.5px;font-weight:700;color:#2d1854;">Scan QR Code to Pay</span>
           </div>
           <!-- QR body: very light lavender/white bg, QR centered, no extra border box -->
-          <div style="padding:20px 16px 22px;display:flex;justify-content:center;background:#f8f7fc;">
-            <img id="dynamicQrImg" src="" alt="QR Code" style="width:200px;height:200px;object-fit:contain;display:block;">
+          <div style="padding:14px 14px 16px;display:flex;justify-content:center;background:#f8f7fc;">
+            <img id="dynamicQrImg" src="" alt="QR Code" style="width:175px;height:175px;object-fit:contain;display:block;">
           </div>
         </div>
 
         <!-- ━━━━ CARD 2: Pay via UPI App ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <!-- Exact Replica matching image_388e3f6b.png -->
-        <div style="background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 1px 8px rgba(80,0,160,0.08);border:1px solid #e5dff5;">
+        <div style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 1px 6px rgba(80,0,160,0.07);border:1px solid #e5dff5;">
           <!-- Lavender header row -->
-          <div style="background:#f6f3fc;padding:12px 16px;display:flex;align-items:center;gap:10px;">
-            <!-- Exact 4-shape icon from screenshot -->
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5b21b6" stroke-width="2.3">
+          <div style="background:#f6f3fc;padding:10px 14px;display:flex;align-items:center;gap:9px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5b21b6" stroke-width="2.3">
               <rect x="3" y="3" width="7" height="7" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
               <circle cx="17.5" cy="6.5" r="3.5"/>
               <rect x="3" y="14" width="7" height="7" rx="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               <rect x="14" y="14" width="7" height="7" rx="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:17.5px;font-weight:700;color:#1e1b4b;letter-spacing:0.1px;">Pay via UPI App</span>
+            <span style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:16.5px;font-weight:700;color:#1e1b4b;letter-spacing:0.1px;">Pay via UPI App</span>
           </div>
           <!-- Two-column app buttons -->
-          <div style="padding:14px 10px 16px;display:grid;grid-template-columns:1fr 1fr;gap:9px;background:#ffffff;">
+          <div style="padding:11px 9px;display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#ffffff;">
 
             <!-- ═══ PAYTM BUTTON ═══ -->
             <button id="paytmBtn"
               type="button"
-              style="border:1.5px solid #d1cfe8;border-radius:14px;background:#ffffff;padding:12px 10px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.15s ease;width:100%;box-sizing:border-box;"
+              style="border:1.5px solid #d1cfe8;border-radius:13px;background:#ffffff;padding:11px 8px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.15s ease;width:100%;box-sizing:border-box;"
               onmouseover="this.style.background='#fbfaff';this.style.borderColor='#9074d0';"
               onmouseout="this.style.background='#ffffff';this.style.borderColor='#d1cfe8';">
-              <img src="/assets/paytm-logo.png" alt="Paytm Logo" style="height:19px;width:auto;object-fit:contain;flex-shrink:0;display:block;">
-              <span style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:18px;font-weight:700;color:#111827;letter-spacing:0.1px;white-space:nowrap;">Paytm</span>
+              <img src="/assets/paytm-logo.png" alt="Paytm Logo" style="height:18px;width:auto;object-fit:contain;flex-shrink:0;display:block;">
+              <span style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:17px;font-weight:700;color:#111827;letter-spacing:0.1px;white-space:nowrap;">Paytm</span>
             </button>
 
             <!-- ═══ PHONEPE BUTTON ═══ -->
             <button id="phonepeBtn"
               type="button"
-              style="border:1.5px solid #d1cfe8;border-radius:14px;background:#ffffff;padding:12px 10px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.15s ease;width:100%;box-sizing:border-box;"
+              style="border:1.5px solid #d1cfe8;border-radius:13px;background:#ffffff;padding:11px 8px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.15s ease;width:100%;box-sizing:border-box;"
               onmouseover="this.style.background='#fbfaff';this.style.borderColor='#9074d0';"
               onmouseout="this.style.background='#ffffff';this.style.borderColor='#d1cfe8';">
-              <img src="/assets/phonepe-logo.png" alt="PhonePe Logo" style="width:28px;height:28px;border-radius:50%;object-fit:contain;flex-shrink:0;display:block;">
-              <span style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:18px;font-weight:700;color:#111827;letter-spacing:0.1px;white-space:nowrap;">PhonePe</span>
+              <img src="/assets/phonepe-logo.png" alt="PhonePe Logo" style="width:26px;height:26px;border-radius:50%;object-fit:contain;flex-shrink:0;display:block;">
+              <span style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:17px;font-weight:700;color:#111827;letter-spacing:0.1px;white-space:nowrap;">PhonePe</span>
             </button>
 
           </div>
         </div>
 
         <!-- ━━━━ CARD 3: Manual Transfer 🔥 Recommended ━━━━━━━━━━━━━━━━━━━━━━ -->
-        <!-- Screenshot 4: Lavender header with pencil+text+badge, white body, big UPI ID label -->
-        <div style="background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 1px 8px rgba(80,0,160,0.08);border:1px solid #e5dff5;">
+        <div style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 1px 6px rgba(80,0,160,0.07);border:1px solid #e5dff5;">
           <!-- Lavender header row -->
-          <div style="background:#f6f3fc;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;">
-            <div style="display:flex;align-items:center;gap:9px;">
-              <!-- Pencil edit icon -->
-              <svg width="18" height="18" fill="none" stroke="#4a157c" stroke-width="2.2" viewBox="0 0 24 24">
+          <div style="background:#f6f3fc;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <svg width="17" height="17" fill="none" stroke="#4a157c" stroke-width="2.2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
               </svg>
-              <span style="font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:700;color:#1e1b4b;">Manual Transfer</span>
+              <span style="font-family:Georgia,'Times New Roman',serif;font-size:15.5px;font-weight:700;color:#1e1b4b;">Manual Transfer</span>
             </div>
             <!-- Recommended badge: orange-red rounded pill, 🔥 fire icon -->
-            <span style="background:#f05252;color:#ffffff;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:5px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;white-space:nowrap;">
-              <span style="font-size:13px;">🔥</span> Recommended
+            <span style="background:#f05252;color:#ffffff;border-radius:999px;padding:3.5px 11px;font-size:11.5px;font-weight:800;display:inline-flex;align-items:center;gap:4px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;white-space:nowrap;">
+              <span style="font-size:12px;">🔥</span> Recommended
             </span>
           </div>
 
           <!-- White body -->
-          <div style="padding:16px 16px 18px;background:#ffffff;">
-            <!-- UPI ID label: larger, bolder (matches screenshot 4 exactly) -->
-            <p style="font-family:Georgia,'Times New Roman',serif;font-size:14px;font-weight:700;color:#111111;margin:0 0 10px;letter-spacing:0.2px;">UPI ID</p>
+          <div style="padding:12px 14px 14px;background:#ffffff;">
+            <!-- UPI ID label -->
+            <p style="font-family:Georgia,'Times New Roman',serif;font-size:13.5px;font-weight:700;color:#111111;margin:0 0 8px;letter-spacing:0.2px;">UPI ID</p>
 
-            <!-- UPI row: light gray bg rounded rect, Georgia UPI text, purple COPY rect button -->
+            <!-- UPI row -->
             <div style="display:flex;align-items:center;border:1.5px solid #ddd8ec;border-radius:12px;overflow:hidden;background:#ffffff;">
-              <span id="gatewayUpiText" style="font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:600;color:#1a1a2e;flex:1;padding:11px 14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Q60922****@ybl</span>
-              <!-- COPY: purple rectangle with slight radius -->
+              <span id="gatewayUpiText" style="font-family:Georgia,'Times New Roman',serif;font-size:15.5px;font-weight:600;color:#1a1a2e;flex:1;padding:10px 12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Q60922****@ybl</span>
+              <!-- COPY button -->
               <button id="copyUpiBtn"
-                style="background:#4a157c;color:#ffffff;border:none;border-radius:8px;margin:4px 6px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:0.5px;transition:background 0.15s;"
+                style="background:#4a157c;color:#ffffff;border:none;border-radius:8px;margin:3.5px 5px;padding:8px 16px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:0.5px;transition:background 0.15s;"
                 onmouseover="this.style.background='#3b0f63'" onmouseout="this.style.background='#4a157c'">COPY</button>
             </div>
 
             <!-- Amber italic subtext -->
-            <p style="font-family:Georgia,'Times New Roman',serif;font-size:13px;color:#c2710c;font-weight:600;margin:9px 0 0;font-style:italic;">Get new UPI every time, do not save.</p>
+            <p style="font-family:Georgia,'Times New Roman',serif;font-size:12.5px;color:#c2710c;font-weight:600;margin:7px 0 0;font-style:italic;">Get new UPI every time, do not save.</p>
           </div>
         </div>
 
         <!-- ━━━━ CARD 4: 12-digit UTR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-        <!-- Screenshot 5: White card, bold title, input with * UTR prefix, validation msg, purple pill button -->
-        <div style="background:#ffffff;border-radius:18px;padding:16px;box-shadow:0 1px 8px rgba(80,0,160,0.08);border:1px solid #e5dff5;">
+        <div style="background:#ffffff;border-radius:16px;padding:13px 14px 15px;box-shadow:0 1px 6px rgba(80,0,160,0.07);border:1px solid #e5dff5;">
           <!-- Title: 12-digit UTR bold -->
-          <h3 style="font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:700;color:#111111;margin:0 0 12px;">12-digit UTR</h3>
+          <h3 style="font-family:Georgia,'Times New Roman',serif;font-size:15.5px;font-weight:700;color:#111111;margin:0 0 10px;">12-digit UTR</h3>
 
-          <!-- Input wrapper: white bg, gray border, rounded -->
+          <!-- Input wrapper -->
           <div style="border:1.5px solid #ddd8ec;border-radius:12px;padding:0;background:#ffffff;overflow:hidden;" id="utrFieldWrapper">
-            <div style="display:flex;align-items:center;padding:12px 14px;">
-              <span style="color:#e53e3e;font-weight:800;margin-right:5px;font-size:16px;line-height:1;">*</span>
-              <span style="font-family:Georgia,'Times New Roman',serif;font-size:14px;font-weight:700;color:#374151;margin-right:12px;">UTR</span>
+            <div style="display:flex;align-items:center;padding:10px 12px;">
+              <span style="color:#e53e3e;font-weight:800;margin-right:5px;font-size:15px;line-height:1;">*</span>
+              <span style="font-family:Georgia,'Times New Roman',serif;font-size:13.5px;font-weight:700;color:#374151;margin-right:10px;">UTR</span>
               <input
                 type="text"
                 id="utrInput"
                 maxlength="12"
                 inputmode="numeric"
                 placeholder="Enter 12-digit UTR"
-                style="flex:1;border:none;outline:none;font-family:Georgia,'Times New Roman',serif;font-size:14.5px;font-weight:600;color:#1a1a2e;background:transparent;"
+                style="flex:1;border:none;outline:none;font-family:Georgia,'Times New Roman',serif;font-size:14px;font-weight:600;color:#1a1a2e;background:transparent;"
               >
             </div>
-            <!-- Inline validation: "Input 12 digits" in red when wrong length -->
-            <div id="utrValidationMsg" style="display:none;padding:0 14px 10px;font-family:Georgia,'Times New Roman',serif;font-size:13px;color:#e53e3e;font-weight:600;">Input 12 digits</div>
+            <!-- Inline validation -->
+            <div id="utrValidationMsg" style="display:none;padding:0 12px 8px;font-family:Georgia,'Times New Roman',serif;font-size:12.5px;color:#e53e3e;font-weight:600;">Input 12 digits</div>
           </div>
 
           <!-- Amber subtext -->
-          <p style="font-family:Georgia,'Times New Roman',serif;font-size:13px;color:#c2710c;font-weight:600;margin:10px 0 14px;font-style:italic;">Complete payment first, then enter UTR here.</p>
+          <p style="font-family:Georgia,'Times New Roman',serif;font-size:12.5px;color:#c2710c;font-weight:600;margin:8px 0 12px;font-style:italic;">Complete payment first, then enter UTR here.</p>
 
           <!-- Submit UTR: full-width purple pill button -->
           <button
             id="submitUtrBtn"
-            style="width:100%;padding:14px 16px;border-radius:999px;background:#4a157c;color:#ffffff;font-family:Georgia,'Times New Roman',serif;font-size:17px;font-weight:700;border:none;cursor:pointer;box-shadow:0 3px 12px rgba(74,21,124,0.3);transition:background 0.15s;letter-spacing:0.3px;"
+            style="width:100%;padding:13px 16px;border-radius:999px;background:#4a157c;color:#ffffff;font-family:Georgia,'Times New Roman',serif;font-size:16.5px;font-weight:700;border:none;cursor:pointer;box-shadow:0 3px 12px rgba(74,21,124,0.3);transition:background 0.15s;letter-spacing:0.3px;"
             onmouseover="this.style.background='#3b0f63'" onmouseout="this.style.background='#4a157c'"
           >
             Submit UTR
@@ -554,7 +544,7 @@
             appName: 'Zen Money',
             appLogo: '/assets/zen-money.svg',
             customerName: 'BHAVIK KAMLESH SANGHVI',
-            repaymentAmount: 17930,
+            repaymentAmount: 12540,
             loanAmount: 11000,
             receivedAmount: 11000,
             bankAddress: 'HDFC BANK, ANDHERI (W), MUMBAI - 746388853(ifsc:UHDK84738)',
@@ -565,7 +555,7 @@
             dueDate: '30-10-2026',
             renewalDays: 7,
             renewalFee: 4400,
-            upiId: 'shah817478@ybl',
+            upiId: 'Q609224859@ybl',
             merchantName: 'Zen Money Pay'
           };
         }
@@ -578,7 +568,7 @@
           appName: 'Zen Money',
           appLogo: '/assets/zen-money.svg',
           customerName: 'BHAVIK KAMLESH SANGHVI',
-          repaymentAmount: 17930,
+          repaymentAmount: 12540,
           loanAmount: 11000,
           receivedAmount: 11000,
           bankAddress: 'HDFC BANK, ANDHERI (W), MUMBAI - 746388853(ifsc:UHDK84738)',
@@ -589,7 +579,7 @@
           dueDate: '30-10-2026',
           renewalDays: 7,
           renewalFee: 4400,
-          upiId: 'shah817478@ybl',
+          upiId: 'Q609224859@ybl',
           merchantName: 'Zen Money Pay'
         };
         renderData();
@@ -775,7 +765,7 @@
       }
     });
 
-    let totalSeconds = 9 * 60 + 48;
+    let totalSeconds = 5 * 60 + 37;
     function startTimer() {
       const timerEl = document.getElementById('countdownTimer');
       setInterval(() => {
