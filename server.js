@@ -5,6 +5,12 @@ const fs = require('fs');
 const multer = require('multer');
 const QRCode = require('qrcode');
 const cookieParser = require('cookie-parser');
+const {
+  validateAppProfile,
+  findOrAddAppProfile,
+  updateAppProfile,
+  removeAppProfile
+} = require('./lib/app-profiles');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -205,23 +211,74 @@ app.get('/api/logos', (req, res) => {
   res.json({ logos, total: logos.length });
 });
 
-app.post('/api/logos/upload', upload.single('logoFile'), (req, res) => {
+// Create new App Name with Logo (supports file upload OR logoUrl)
+app.post(['/api/logos', '/api/logos/upload'], upload.single('logoFile'), (req, res) => {
   try {
-    const { appName } = req.body;
-    if (!req.file) {
-      return res.status(400).json({ error: 'No image file uploaded' });
+    const { appName, logoUrl } = req.body;
+    const cleanName = (appName || '').trim();
+    if (!cleanName) {
+      return res.status(400).json({ error: 'App Name is required' });
     }
-    const logos = readJSON(LOGOS_FILE, []);
-    const newLogo = {
-      id: 'logo_' + Date.now(),
-      name: appName || path.parse(req.file.originalname).name,
-      icon: '/uploads/' + req.file.filename
-    };
-    logos.push(newLogo);
+
+    let iconPath = '';
+    if (req.file) {
+      iconPath = '/uploads/' + req.file.filename;
+    } else if (logoUrl && logoUrl.trim()) {
+      iconPath = logoUrl.trim();
+    } else {
+      return res.status(400).json({ error: 'Please upload a logo image or enter a logo URL' });
+    }
+
+    const logos = readJSON(LOGOS_FILE, [
+      { id: 'zen-money', name: 'Zen Money', icon: '/assets/zen-money.svg' },
+      { id: 'karta-loan', name: 'Karta Loan', icon: '/assets/karta-loan.svg' }
+    ]);
+
+    const result = findOrAddAppProfile(logos, { name: cleanName, icon: iconPath });
     writeJSON(LOGOS_FILE, logos);
-    return res.json({ success: true, logo: newLogo, total: logos.length });
+    return res.json({ success: true, logo: result.item, logos, total: logos.length });
   } catch (err) {
-    return res.status(500).json({ error: 'Failed to upload logo' });
+    return res.status(500).json({ error: 'Failed to save App and Logo' });
+  }
+});
+
+// Edit existing App Name and/or Logo (supports file upload OR logoUrl)
+app.post(['/api/logos/:id/edit', '/api/logos/:id'], upload.single('logoFile'), (req, res) => {
+  try {
+    const { id } = req.params;
+    const { appName, logoUrl } = req.body;
+    let iconPath = logoUrl && logoUrl.trim() ? logoUrl.trim() : undefined;
+    if (req.file) {
+      iconPath = '/uploads/' + req.file.filename;
+    }
+
+    const logos = readJSON(LOGOS_FILE, []);
+    const result = updateAppProfile(logos, id, { name: appName, icon: iconPath });
+    if (!result.success) {
+      return res.status(404).json({ error: result.error || 'App not found' });
+    }
+
+    writeJSON(LOGOS_FILE, logos);
+    return res.json({ success: true, logo: result.item, logos });
+  } catch (err) {
+    return res.status(500).json({ error: 'Failed to update App and Logo' });
+  }
+});
+
+// Remove App Name with Logo from saved list
+app.delete('/api/logos/:id', (req, res) => {
+  try {
+    const { id } = req.params;
+    const logos = readJSON(LOGOS_FILE, []);
+    const result = removeAppProfile(logos, id);
+    if (!result.success) {
+      return res.status(404).json({ error: 'App profile not found' });
+    }
+
+    writeJSON(LOGOS_FILE, result.logos);
+    return res.json({ success: true, logos: result.logos, total: result.logos.length });
+  } catch (err) {
+    return res.status(500).json({ error: 'Failed to delete App and Logo' });
   }
 });
 
@@ -239,11 +296,25 @@ app.post('/api/customers', checkAuth, (req, res) => {
     const repaymentAmount = parseFloat(data.repaymentAmount) || 0;
     const loanAmount = parseFloat(data.loanAmount) || repaymentAmount;
 
+    const chosenAppName = (data.appName || 'Zen Money').trim();
+    const chosenAppLogo = (data.appLogo || '/assets/zen-money.svg').trim();
+
+    // Automatically save App Name with App Logo for using always if not already present
+    try {
+      const logos = readJSON(LOGOS_FILE, []);
+      const appSaveRes = findOrAddAppProfile(logos, { name: chosenAppName, icon: chosenAppLogo });
+      if (appSaveRes.added) {
+        writeJSON(LOGOS_FILE, logos);
+      }
+    } catch (e) {
+      console.warn('Could not auto-save app profile:', e.message);
+    }
+
     const newCustomer = {
       id: 'cust_' + Date.now(),
       token: token,
-      appName: data.appName || 'Zen Money',
-      appLogo: data.appLogo || '/assets/zen-money.svg',
+      appName: chosenAppName,
+      appLogo: chosenAppLogo,
       customerName: data.customerName || 'Customer Name',
       repaymentAmount: repaymentAmount,
       loanAmount: loanAmount,
@@ -257,7 +328,7 @@ app.post('/api/customers', checkAuth, (req, res) => {
       renewalDays: parseInt(data.renewalDays, 10) || 7,
       renewalFee: parseFloat(data.renewalFee) || Math.round(loanAmount * 0.4),
       upiId: data.upiId || 'Q609224859@ybl',
-      merchantName: data.merchantName || (data.appName || 'Zen Money'),
+      merchantName: data.merchantName || chosenAppName,
       status: 'Pending',
       submittedUtr: null,
       utrSubmittedAt: null,
