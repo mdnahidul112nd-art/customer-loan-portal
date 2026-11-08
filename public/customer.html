@@ -4,19 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Repay</title>
-  <!-- Google Fonts: Playfair Display & Lora -->
+  <!-- Google Fonts: Lora (Exact match with reference screenshots) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Exact Typography from the original screenshots */
+    /* Exact Typography from reference screenshots: Lora Serif */
+    *, html, body, input, select, button {
+      font-family: 'Lora', Georgia, 'Times New Roman', Times, serif;
+      -webkit-font-smoothing: antialiased;
+    }
     .font-serif-app {
-      font-family: 'Playfair Display', Georgia, 'Times New Roman', Times, serif;
+      font-family: 'Lora', Georgia, 'Times New Roman', Times, serif;
     }
     .font-sans-app {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: 'Lora', Georgia, 'Times New Roman', Times, serif;
     }
     body {
       background-color: #f2f3f5;
@@ -81,79 +85,80 @@
       <div class="space-y-3.5 pt-3">
         
         <!-- App Branding: Icon + App Name (Screenshot 3) -->
+        <!-- App Branding: Icon + App Name (Screenshot 3 & image_860d4558.png) -->
         <div class="flex items-center space-x-3 px-4">
-          <div class="w-[46px] h-[46px] rounded-2xl overflow-hidden shadow-sm flex-shrink-0 bg-white border border-gray-100 flex items-center justify-center">
+          <div class="w-[48px] h-[48px] rounded-2xl overflow-hidden shadow-sm flex-shrink-0 bg-white border border-gray-100 flex items-center justify-center">
             <img id="mainAppLogo" src="/assets/zen-money.svg" alt="App Logo" class="w-full h-full object-cover">
           </div>
-          <h2 id="mainAppName" class="text-[21px] font-bold text-[#111827] font-serif-app">Zen Money</h2>
+          <h2 id="mainAppName" class="text-[23px] font-bold text-[#1a1a1a] font-serif-app">Zen Money</h2>
         </div>
 
-        <!-- Main Details Card (Screenshot 3: White Card with Rounded Corners) -->
+        <!-- Main Details Card (Screenshot 3 & image_93367845.png) -->
         <div class="mx-3.5 bg-white rounded-2xl px-5 py-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-gray-100/80">
           
-          <!-- Repayment Amount Header -->
-          <div class="text-center pb-3">
-            <p class="text-[#6b7280] text-[14px] font-serif-app">Repayment Amount</p>
-            <h3 id="mainRepaymentAmount" class="text-[34px] font-bold text-[#283593] font-serif-app tracking-tight mt-0.5">
+          <!-- Repayment Amount Header (image_860d4558.png) -->
+          <div class="text-center pb-2.5">
+            <p class="text-[#262626] text-[17.5px] font-medium font-serif-app">Repayment Amount</p>
+            <h3 id="mainRepaymentAmount" class="text-[36px] font-bold text-[#283593] font-serif-app tracking-tight mt-1">
               ₹ 12,540
             </h3>
           </div>
 
-          <!-- Rows List (Screenshot 3: Crisp Sans-Serif Table) -->
-          <div class="pt-3 space-y-3 text-[13.5px] font-sans-app">
+          <!-- Rows List (Exact Serif Font from image_93367845.png) -->
+          <div class="pt-2 space-y-3.5 text-[14px] font-serif-app">
             <div class="flex justify-between items-start">
-              <span class="text-[#9ca3af]">Name</span>
-              <span id="custNameVal" class="text-[#1f2937] font-semibold text-right max-w-[210px] truncate uppercase">BHAVIK KAMLES...</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Name</span>
+              <span id="custNameVal" class="text-[#1a1a1a] font-semibold text-right max-w-[210px] truncate uppercase font-serif-app">BHAVIK KAMLES...</span>
             </div>
 
             <div class="flex justify-between items-start">
-              <span class="text-[#9ca3af]">Bank Address</span>
-              <span id="bankAddressVal" class="text-[#374151] text-right max-w-[220px] truncate text-[12.5px]">HDFC BANK, ANDHERI (W), MU...</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Bank Address</span>
+              <span id="bankAddressVal" class="text-[#1a1a1a] text-right max-w-[220px] truncate text-[13px] font-medium font-serif-app">HDFC BANK, ANDHERI (W), MU...</span>
             </div>
 
             <div class="flex justify-between items-center">
-              <span class="text-[#9ca3af]">Received amount</span>
-              <span id="receivedAmountVal" class="text-[#1f2937] font-semibold">₹ 11,000</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Received amount</span>
+              <span id="receivedAmountVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 11,000</span>
             </div>
 
             <div class="flex justify-between items-center">
-              <span class="text-[#9ca3af]">Loan Amount</span>
-              <span id="loanAmountVal" class="text-[#1f2937] font-semibold">₹ 11,000</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Loan Amount</span>
+              <span id="loanAmountVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 11,000</span>
             </div>
 
             <div class="flex justify-between items-center">
-              <span class="text-[#9ca3af]">Amount Paid</span>
-              <span id="amountPaidVal" class="text-[#1f2937] font-semibold">₹ 0</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Amount Paid</span>
+              <span id="amountPaidVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 0</span>
             </div>
 
             <div class="flex justify-between items-center">
-              <span class="text-[#9ca3af]">Over Due</span>
-              <span id="overdueDaysVal" class="text-[#be185d] font-bold">2 Days</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Over Due</span>
+              <span id="overdueDaysVal" class="text-[#be185d] font-bold font-serif-app">2 Days</span>
             </div>
 
             <div class="flex justify-between items-center">
-              <span class="text-[#9ca3af]">Late Fee</span>
-              <span id="lateFeeVal" class="text-[#1f2937] font-semibold">₹ 1,540</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Late Fee</span>
+              <span id="lateFeeVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 1,540</span>
             </div>
 
             <!-- Dashed Divider Line (Exact Screenshot 3) -->
             <div class="border-t border-dashed border-gray-200 my-2.5"></div>
 
             <div class="flex justify-between items-center">
-              <span class="text-[#9ca3af]">Amount Received Date</span>
-              <span id="receivedDateVal" class="text-[#4b5563] font-semibold">23-10-2026</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Amount Received Date</span>
+              <span id="receivedDateVal" class="text-[#262626] font-semibold font-serif-app">23-10-2026</span>
             </div>
 
             <div class="flex justify-between items-center">
-              <span class="text-[#9ca3af]">Due Date</span>
-              <span id="dueDateVal" class="text-[#4b5563] font-semibold">30-10-2026</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Due Date</span>
+              <span id="dueDateVal" class="text-[#262626] font-semibold font-serif-app">30-10-2026</span>
             </div>
           </div>
         </div>
 
-        <!-- Tips Section (Exact Screenshot 3: Serif font, Red bold highlights) -->
-        <div class="px-5 pt-1 space-y-2 text-[14px] leading-relaxed text-[#111827] font-serif-app">
-          <h4 class="font-bold text-[15px] text-[#111827]">Tips:</h4>
+        <!-- Tips Section (Exact Screenshot: Lora Serif font & image_a04636a8.png) -->
+        <div class="px-5 pt-2 pb-2 space-y-3.5 text-[15.5px] leading-[1.55] text-[#1a1a1a] font-serif-app">
+          <h4 class="font-normal text-[18px] text-[#1a1a1a] mb-2 font-serif-app">Tips:</h4>
           
           <p>
             <span class="text-[#e02424] font-bold">! ! ! &nbsp;One UPI</span> can only transfer money <span class="text-[#e02424] font-bold">ONCE.</span>
@@ -183,7 +188,7 @@
         <!-- Renew Button -->
         <button 
           id="goToRenewBtn"
-          class="w-1/2 py-3 px-4 rounded-full border-2 border-[#283593] bg-white text-[#283593] font-bold text-[17px] hover:bg-blue-50 transition-all active:scale-95 text-center font-serif-app shadow-sm"
+          class="w-1/2 py-3.5 px-4 rounded-full border-2 border-[#283593] bg-white text-[#283593] font-bold text-[18px] hover:bg-blue-50 transition-all active:scale-95 text-center font-serif-app shadow-sm"
         >
           Renew
         </button>
@@ -191,7 +196,7 @@
         <!-- Repay Button -->
         <button 
           id="goToPayFullBtn"
-          class="w-1/2 py-3 px-4 rounded-full bg-[#283593] text-white font-bold text-[17px] hover:bg-[#202b78] transition-all active:scale-95 text-center font-serif-app shadow-md"
+          class="w-1/2 py-3.5 px-4 rounded-full bg-[#283593] text-white font-bold text-[18px] hover:bg-[#202b78] transition-all active:scale-95 text-center font-serif-app shadow-md"
         >
           Repay
         </button>
@@ -200,7 +205,7 @@
     </div>
 
     <!-- ========================================================================= -->
-    <!-- VIEW 2: RENEW PAYMENT (SCREENSHOT 4: AUTOMATIC 40% CALCULATION) -->
+    <!-- VIEW 2: RENEW PAYMENT (SAME EXACT FONT & STYLING) -->
     <!-- ========================================================================= -->
     <div id="viewRenew" class="flex-1 flex flex-col justify-between pb-24 hidden">
       
@@ -215,49 +220,49 @@
 
       <div class="space-y-3.5 pt-3">
         
-        <!-- App Branding (Screenshot 4) -->
+        <!-- App Branding (Same exact font) -->
         <div class="flex items-center space-x-3 px-4">
-          <div class="w-[46px] h-[46px] rounded-2xl overflow-hidden shadow-sm flex-shrink-0 bg-white border border-gray-100 flex items-center justify-center">
+          <div class="w-[48px] h-[48px] rounded-2xl overflow-hidden shadow-sm flex-shrink-0 bg-white border border-gray-100 flex items-center justify-center">
             <img id="renewAppLogo" src="/assets/zen-money.svg" alt="App Logo" class="w-full h-full object-cover">
           </div>
-          <h2 id="renewAppName" class="text-[21px] font-bold text-[#111827] font-serif-app">Zen Money</h2>
+          <h2 id="renewAppName" class="text-[23px] font-bold text-[#1a1a1a] font-serif-app">Zen Money</h2>
         </div>
 
-        <!-- Renew Card (Screenshot 4: 40% Dynamic calculation) -->
+        <!-- Renew Card (40% Dynamic calculation, same exact font) -->
         <div class="mx-3.5 bg-white rounded-2xl px-5 py-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-gray-100/80">
           
-          <div class="text-center pb-3">
-            <p class="text-[#6b7280] text-[14px] font-serif-app">Repayment Amount</p>
-            <h3 id="renewCalculatedAmount" class="text-[34px] font-bold text-[#283593] font-serif-app tracking-tight mt-0.5">
+          <div class="text-center pb-2.5">
+            <p class="text-[#262626] text-[17.5px] font-medium font-serif-app">Repayment Amount</p>
+            <h3 id="renewCalculatedAmount" class="text-[36px] font-bold text-[#283593] font-serif-app tracking-tight mt-1">
               ₹ 5,016
             </h3>
           </div>
 
-          <!-- Rows List (Screenshot 4) -->
-          <div class="pt-3 space-y-3.5 text-[13.5px] font-sans-app">
+          <!-- Rows List (Same exact serif font) -->
+          <div class="pt-2 space-y-3.5 text-[14px] font-serif-app">
             <div class="flex justify-between items-center">
-              <span class="text-[#9ca3af]">Name</span>
-              <span id="renewCustNameVal" class="text-[#1f2937] font-semibold uppercase">BHAVIK KAMLESH SANGHVI</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Name</span>
+              <span id="renewCustNameVal" class="text-[#1a1a1a] font-semibold uppercase font-serif-app">BHAVIK KAMLESH SANGHVI</span>
             </div>
 
             <div class="flex justify-between items-center">
-              <span class="text-[#9ca3af]">Loan Amount</span>
-              <span id="renewLoanAmountVal" class="text-[#1f2937] font-semibold">₹ 11,000</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Loan Amount</span>
+              <span id="renewLoanAmountVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 11,000</span>
             </div>
 
             <div class="flex justify-between items-center">
-              <span class="text-[#9ca3af]">Late Fee</span>
-              <span id="renewLateFeeVal" class="text-[#1f2937] font-semibold">₹ 1,540</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Late Fee</span>
+              <span id="renewLateFeeVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 1,540</span>
             </div>
 
             <div class="flex justify-between items-center">
-              <span class="text-[#9ca3af]">Renewal Day</span>
-              <span id="renewDaysVal" class="text-[#1f2937] font-semibold">7 Day</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Renewal Day</span>
+              <span id="renewDaysVal" class="text-[#1a1a1a] font-semibold font-serif-app">7 Day</span>
             </div>
 
             <div class="flex justify-between items-center">
-              <span class="text-[#9ca3af]">Renewal Fee</span>
-              <span id="renewFeeVal" class="text-[#1f2937] font-semibold">₹ 4,400</span>
+              <span class="text-[#8e95a5] font-normal font-serif-app">Renewal Fee</span>
+              <span id="renewFeeVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 4,400</span>
             </div>
 
             <!-- Upward Chevron Caret (Screenshot 4) -->
@@ -267,19 +272,19 @@
           </div>
         </div>
 
-        <!-- Repay Now Button (Screenshot 4: User requested solid blue button) -->
+        <!-- Repay Now Button (Exact matching button) -->
         <div class="px-3.5">
           <button 
             id="goToPayRenewBtn"
-            class="w-full py-3.5 px-6 rounded-full bg-[#283593] text-white font-bold text-[18px] shadow-lg hover:bg-[#202b78] transition-all active:scale-[0.98] text-center font-serif-app"
+            class="w-full py-4 px-6 rounded-full bg-[#283593] text-white font-bold text-[18px] shadow-lg hover:bg-[#202b78] transition-all active:scale-[0.98] text-center font-serif-app"
           >
             Repay Now
           </button>
         </div>
 
-        <!-- Tips Section -->
-        <div class="px-5 pt-1 space-y-2 text-[14px] leading-relaxed text-[#111827] font-serif-app">
-          <h4 class="font-bold text-[15px] text-[#111827]">Tips:</h4>
+        <!-- Tips Section (Same exact font and styling in Renew View) -->
+        <div class="px-5 pt-2 pb-2 space-y-3.5 text-[15.5px] leading-[1.55] text-[#1a1a1a] font-serif-app">
+          <h4 class="font-normal text-[18px] text-[#1a1a1a] mb-2 font-serif-app">Tips:</h4>
           
           <p>
             <span class="text-[#e02424] font-bold">! ! ! &nbsp;One UPI</span> can only transfer money <span class="text-[#e02424] font-bold">ONCE.</span>
@@ -295,6 +300,10 @@
 
           <p>
             Otherwise, the order <span class="text-[#e02424] font-bold">CANNOT be completed.</span>
+          </p>
+
+          <p>
+            After payment is completed, please <span class="text-[#e02424] font-bold">fill in the UTR.</span>
           </p>
         </div>
 
