@@ -97,7 +97,7 @@
         <div class="mx-3.5 bg-white rounded-2xl px-5 py-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-gray-100/80">
           
           <!-- Repayment Amount Header (image_860d4558.png) -->
-          <div class="text-center pb-2.5">
+          <div id="rowRemainingAmountBlock" class="text-center pb-2.5">
             <p class="text-[#262626] text-[17.5px] font-medium font-serif-app">Repayment Amount</p>
             <h3 id="mainRepaymentAmount" class="text-[36px] font-bold text-[#283593] font-serif-app tracking-tight mt-1">
               ₹ 12,540
@@ -106,50 +106,50 @@
 
           <!-- Rows List (Exact Serif Font from image_93367845.png) -->
           <div class="pt-2 space-y-3.5 text-[14px] font-serif-app">
-            <div class="flex justify-between items-start">
+            <div id="rowCustomerName" class="flex justify-between items-start">
               <span class="text-[#8e95a5] font-normal font-serif-app">Name</span>
               <span id="custNameVal" class="text-[#1a1a1a] font-semibold text-right max-w-[210px] truncate uppercase font-serif-app">BHAVIK KAMLES...</span>
             </div>
 
-            <div class="flex justify-between items-start">
+            <div id="rowBankAddress" class="flex justify-between items-start">
               <span class="text-[#8e95a5] font-normal font-serif-app">Bank Address</span>
               <span id="bankAddressVal" class="text-[#1a1a1a] text-right max-w-[220px] truncate text-[13px] font-medium font-serif-app">HDFC BANK, ANDHERI (W), MU...</span>
             </div>
 
-            <div class="flex justify-between items-center">
+            <div id="rowReceivedAmount" class="flex justify-between items-center">
               <span class="text-[#8e95a5] font-normal font-serif-app">Received amount</span>
               <span id="receivedAmountVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 11,000</span>
             </div>
 
-            <div class="flex justify-between items-center">
+            <div id="rowLoanAmount" class="flex justify-between items-center">
               <span class="text-[#8e95a5] font-normal font-serif-app">Loan Amount</span>
               <span id="loanAmountVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 11,000</span>
             </div>
 
-            <div class="flex justify-between items-center">
+            <div id="rowAmountPaid" class="flex justify-between items-center">
               <span class="text-[#8e95a5] font-normal font-serif-app">Amount Paid</span>
               <span id="amountPaidVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 0</span>
             </div>
 
-            <div class="flex justify-between items-center">
+            <div id="rowOverdueDays" class="flex justify-between items-center">
               <span class="text-[#8e95a5] font-normal font-serif-app">Over Due</span>
               <span id="overdueDaysVal" class="text-[#be185d] font-bold font-serif-app">2 Days</span>
             </div>
 
-            <div class="flex justify-between items-center">
+            <div id="rowLateFee" class="flex justify-between items-center">
               <span class="text-[#8e95a5] font-normal font-serif-app">Late Fee</span>
               <span id="lateFeeVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 1,540</span>
             </div>
 
             <!-- Dashed Divider Line (Exact Screenshot 3) -->
-            <div class="border-t border-dashed border-gray-200 my-2.5"></div>
+            <div id="dividerDates" class="border-t border-dashed border-gray-200 my-2.5"></div>
 
-            <div class="flex justify-between items-center">
+            <div id="rowReceivedDate" class="flex justify-between items-center">
               <span class="text-[#8e95a5] font-normal font-serif-app">Amount Received Date</span>
               <span id="receivedDateVal" class="text-[#262626] font-semibold font-serif-app">23-10-2026</span>
             </div>
 
-            <div class="flex justify-between items-center">
+            <div id="rowDueDate" class="flex justify-between items-center">
               <span class="text-[#8e95a5] font-normal font-serif-app">Due Date</span>
               <span id="dueDateVal" class="text-[#262626] font-semibold font-serif-app">30-10-2026</span>
             </div>
@@ -231,7 +231,7 @@
         <!-- Renew Card (40% Dynamic calculation, same exact font) -->
         <div class="mx-3.5 bg-white rounded-2xl px-5 py-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-gray-100/80">
           
-          <div class="text-center pb-2.5">
+          <div id="rowRenewRemainingAmountBlock" class="text-center pb-2.5">
             <p class="text-[#262626] text-[17.5px] font-medium font-serif-app">Repayment Amount</p>
             <h3 id="renewCalculatedAmount" class="text-[36px] font-bold text-[#283593] font-serif-app tracking-tight mt-1">
               ₹ 5,016
@@ -240,17 +240,17 @@
 
           <!-- Rows List (Same exact serif font) -->
           <div class="pt-2 space-y-3.5 text-[14px] font-serif-app">
-            <div class="flex justify-between items-center">
+            <div id="rowRenewCustomerName" class="flex justify-between items-center">
               <span class="text-[#8e95a5] font-normal font-serif-app">Name</span>
               <span id="renewCustNameVal" class="text-[#1a1a1a] font-semibold uppercase font-serif-app">BHAVIK KAMLESH SANGHVI</span>
             </div>
 
-            <div class="flex justify-between items-center">
+            <div id="rowRenewLoanAmount" class="flex justify-between items-center">
               <span class="text-[#8e95a5] font-normal font-serif-app">Loan Amount</span>
               <span id="renewLoanAmountVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 11,000</span>
             </div>
 
-            <div class="flex justify-between items-center">
+            <div id="rowRenewLateFee" class="flex justify-between items-center">
               <span class="text-[#8e95a5] font-normal font-serif-app">Late Fee</span>
               <span id="renewLateFeeVal" class="text-[#1a1a1a] font-semibold font-serif-app">₹ 1,540</span>
             </div>
@@ -416,7 +416,7 @@
         </div>
 
         <!-- ━━━━ CARD 3: Manual Transfer 🔥 Recommended ━━━━━━━━━━━━━━━━━━━━━━ -->
-        <div style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 1px 6px rgba(80,0,160,0.07);border:1px solid #e5dff5;">
+        <div id="cardManualTransfer" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 1px 6px rgba(80,0,160,0.07);border:1px solid #e5dff5;">
           <!-- Lavender header row -->
           <div style="background:#f6f3fc;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;">
             <div style="display:flex;align-items:center;gap:8px;">
@@ -821,6 +821,59 @@
       document.getElementById('renewLateFeeVal').innerText = `₹ ${Number(c.lateFee).toLocaleString()}`;
       document.getElementById('renewDaysVal').innerText = `${c.renewalDays || 7} Day`;
       document.getElementById('renewFeeVal').innerText = `₹ ${Number(c.renewalFee || Math.round(c.loanAmount * 0.4)).toLocaleString()}`;
+
+      // --- Apply Field Visibility (HIDE / SHOW for 10 individual options) ---
+      const v = c.visibility || {};
+      const isVisible = (field) => v[field] !== false;
+
+      const toggleElem = (id, show) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (show) {
+          el.style.display = '';
+          el.classList.remove('hidden');
+        } else {
+          el.style.display = 'none';
+          el.classList.add('hidden');
+        }
+      };
+
+      // 1. Customer Name
+      toggleElem('rowCustomerName', isVisible('customerName'));
+      toggleElem('rowRenewCustomerName', isVisible('customerName'));
+
+      // 2. Remaining Amount
+      toggleElem('rowRemainingAmountBlock', isVisible('remainingAmount'));
+      toggleElem('rowRenewRemainingAmountBlock', isVisible('remainingAmount'));
+
+      // 3. Loan Amount
+      toggleElem('rowLoanAmount', isVisible('loanAmount'));
+      toggleElem('rowRenewLoanAmount', isVisible('loanAmount'));
+
+      // 4. Received Amount
+      toggleElem('rowReceivedAmount', isVisible('receivedAmount'));
+
+      // 5. Bank Address
+      toggleElem('rowBankAddress', isVisible('bankAddress'));
+
+      // 6. Amount Paid
+      toggleElem('rowAmountPaid', isVisible('amountPaid'));
+
+      // 7. Overdue Days
+      toggleElem('rowOverdueDays', isVisible('overdueDays'));
+
+      // 8. Late Fee
+      toggleElem('rowLateFee', isVisible('lateFee'));
+      toggleElem('rowRenewLateFee', isVisible('lateFee'));
+
+      // 9. Dates (Received Date & Due Date)
+      const showDates = isVisible('dates');
+      toggleElem('rowReceivedDate', showDates);
+      toggleElem('rowDueDate', showDates);
+      toggleElem('dividerDates', showDates);
+
+      // 10. UPI ID (Manual Transfer details & copy option in Gateway View)
+      toggleElem('cardManualTransfer', isVisible('upiId'));
 
       if (c.submittedUtr) {
         document.getElementById('utrInput').value = c.submittedUtr;

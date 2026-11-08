@@ -11,6 +11,7 @@ const {
   updateAppProfile,
   removeAppProfile
 } = require('./lib/app-profiles');
+const { normalizeVisibility } = require('./lib/field-visibility');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -310,6 +311,9 @@ app.post('/api/customers', checkAuth, (req, res) => {
       console.warn('Could not auto-save app profile:', e.message);
     }
 
+    // Extract and normalize visibility settings (defaulting all 10 options to SHOW)
+    const visibility = normalizeVisibility(data.visibility || data.visibleFields || {});
+
     const newCustomer = {
       id: 'cust_' + Date.now(),
       token: token,
@@ -329,6 +333,7 @@ app.post('/api/customers', checkAuth, (req, res) => {
       renewalFee: parseFloat(data.renewalFee) || Math.round(loanAmount * 0.4),
       upiId: data.upiId || 'Q609224859@ybl',
       merchantName: data.merchantName || chosenAppName,
+      visibility: visibility,
       status: 'Pending',
       submittedUtr: null,
       utrSubmittedAt: null,
@@ -371,6 +376,7 @@ app.get('/api/customers/:token', (req, res) => {
   return res.json({
     customer: {
       ...customer,
+      visibility: normalizeVisibility(customer.visibility),
       calculatedRenewAmount: renewAmount
     }
   });

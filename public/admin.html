@@ -189,9 +189,15 @@
 
         <!-- Customer Name -->
         <div>
-          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="customerName">
-            Customer Name
-          </label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-[15px] font-bold text-[#1a1a1a]" for="customerName">
+              Customer Name
+            </label>
+            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
+              <button type="button" id="visBtn_customerName_show" onclick="setFieldVisibility('customerName', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
+              <button type="button" id="visBtn_customerName_hide" onclick="setFieldVisibility('customerName', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
+            </div>
+          </div>
           <input 
             type="text" 
             id="customerName" 
@@ -205,9 +211,15 @@
 
         <!-- Remaining Amount (Screenshot 2 with Bengali subtext) -->
         <div>
-          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="repaymentAmount">
-            Remaining Amount
-          </label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-[15px] font-bold text-[#1a1a1a]" for="repaymentAmount">
+              Remaining Amount
+            </label>
+            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
+              <button type="button" id="visBtn_remainingAmount_show" onclick="setFieldVisibility('remainingAmount', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
+              <button type="button" id="visBtn_remainingAmount_hide" onclick="setFieldVisibility('remainingAmount', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
+            </div>
+          </div>
           <input 
             type="number" 
             id="repaymentAmount" 
@@ -221,9 +233,15 @@
 
         <!-- Loan Amount -->
         <div>
-          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="loanAmount">
-            Loan Amount
-          </label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-[15px] font-bold text-[#1a1a1a]" for="loanAmount">
+              Loan Amount
+            </label>
+            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
+              <button type="button" id="visBtn_loanAmount_show" onclick="setFieldVisibility('loanAmount', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
+              <button type="button" id="visBtn_loanAmount_hide" onclick="setFieldVisibility('loanAmount', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
+            </div>
+          </div>
           <input 
             type="number" 
             id="loanAmount" 
@@ -236,9 +254,15 @@
 
         <!-- Received Amount -->
         <div>
-          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="receivedAmount">
-            Received amount
-          </label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-[15px] font-bold text-[#1a1a1a]" for="receivedAmount">
+              Received amount
+            </label>
+            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
+              <button type="button" id="visBtn_receivedAmount_show" onclick="setFieldVisibility('receivedAmount', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
+              <button type="button" id="visBtn_receivedAmount_hide" onclick="setFieldVisibility('receivedAmount', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
+            </div>
+          </div>
           <input 
             type="number" 
             id="receivedAmount" 
@@ -250,9 +274,15 @@
 
         <!-- Bank Address -->
         <div>
-          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="bankAddress">
-            Bank Address
-          </label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-[15px] font-bold text-[#1a1a1a]" for="bankAddress">
+              Bank Address
+            </label>
+            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
+              <button type="button" id="visBtn_bankAddress_show" onclick="setFieldVisibility('bankAddress', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
+              <button type="button" id="visBtn_bankAddress_hide" onclick="setFieldVisibility('bankAddress', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
+            </div>
+          </div>
           <input 
             type="text" 
             id="bankAddress" 
@@ -264,9 +294,15 @@
 
         <!-- Amount Paid -->
         <div>
-          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="amountPaid">
-            Amount Paid
-          </label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-[15px] font-bold text-[#1a1a1a]" for="amountPaid">
+              Amount Paid
+            </label>
+            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
+              <button type="button" id="visBtn_amountPaid_show" onclick="setFieldVisibility('amountPaid', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
+              <button type="button" id="visBtn_amountPaid_hide" onclick="setFieldVisibility('amountPaid', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
+            </div>
+          </div>
           <input 
             type="number" 
             id="amountPaid" 
@@ -277,11 +313,17 @@
         </div>
 
         <!-- Overdue Days & Late Fee -->
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="overdueDays">
-              Over Due (Days)
-            </label>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="block text-[14px] font-bold text-[#1a1a1a]" for="overdueDays">
+                Over Due (Days)
+              </label>
+              <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[10.5px] font-bold select-none">
+                <button type="button" id="visBtn_overdueDays_show" onclick="setFieldVisibility('overdueDays', true)" class="px-2 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[10.5px]">SHOW</button>
+                <button type="button" id="visBtn_overdueDays_hide" onclick="setFieldVisibility('overdueDays', false)" class="px-2 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[10.5px] bg-transparent">HIDE</button>
+              </div>
+            </div>
             <input 
               type="number" 
               id="overdueDays" 
@@ -291,9 +333,15 @@
             >
           </div>
           <div>
-            <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="lateFee">
-              Late Fee (₹)
-            </label>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="block text-[14px] font-bold text-[#1a1a1a]" for="lateFee">
+                Late Fee (₹)
+              </label>
+              <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[10.5px] font-bold select-none">
+                <button type="button" id="visBtn_lateFee_show" onclick="setFieldVisibility('lateFee', true)" class="px-2 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[10.5px]">SHOW</button>
+                <button type="button" id="visBtn_lateFee_hide" onclick="setFieldVisibility('lateFee', false)" class="px-2 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[10.5px] bg-transparent">HIDE</button>
+              </div>
+            </div>
             <input 
               type="number" 
               id="lateFee" 
@@ -304,39 +352,52 @@
           </div>
         </div>
 
-        <!-- Dates -->
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-[14px] font-bold text-[#1a1a1a] mb-1.5" for="amountReceivedDate">
-              Received Date
+        <!-- Dates (Received & Due Date) -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-[15px] font-bold text-[#1a1a1a]">
+              Dates
             </label>
-            <input 
-              type="text" 
-              id="amountReceivedDate" 
-              name="amountReceivedDate" 
-              value="23-10-2026" 
-              class="w-full px-3 py-3 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[14px] bg-white shadow-sm"
-            >
+            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
+              <button type="button" id="visBtn_dates_show" onclick="setFieldVisibility('dates', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
+              <button type="button" id="visBtn_dates_hide" onclick="setFieldVisibility('dates', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
+            </div>
           </div>
-          <div>
-            <label class="block text-[14px] font-bold text-[#1a1a1a] mb-1.5" for="dueDate">
-              Due Date
-            </label>
-            <input 
-              type="text" 
-              id="dueDate" 
-              name="dueDate" 
-              value="30-10-2026" 
-              class="w-full px-3 py-3 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[14px] bg-white shadow-sm"
-            >
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[12px] font-semibold text-gray-500 mb-1" for="amountReceivedDate">Received Date</label>
+              <input 
+                type="text" 
+                id="amountReceivedDate" 
+                name="amountReceivedDate" 
+                value="23-10-2026" 
+                class="w-full px-3 py-2.5 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[14px] bg-white shadow-sm"
+              >
+            </div>
+            <div>
+              <label class="block text-[12px] font-semibold text-gray-500 mb-1" for="dueDate">Due Date</label>
+              <input 
+                type="text" 
+                id="dueDate" 
+                name="dueDate" 
+                value="30-10-2026" 
+                class="w-full px-3 py-2.5 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[14px] bg-white shadow-sm"
+              >
+            </div>
           </div>
         </div>
 
         <!-- UPI ID Setting -->
         <div class="p-4 bg-purple-50/70 border border-purple-200 rounded-2xl space-y-2">
-          <label class="block text-[14px] font-bold text-purple-900" for="upiId">
-            Payment UPI ID (Generating QR & Copy Option)
-          </label>
+          <div class="flex items-center justify-between">
+            <label class="block text-[14px] font-bold text-purple-900" for="upiId">
+              Payment UPI ID (Generating QR & Copy Option)
+            </label>
+            <div class="inline-flex items-center p-0.5 bg-white rounded-lg border border-purple-200 text-[11px] font-bold select-none shadow-xs">
+              <button type="button" id="visBtn_upiId_show" onclick="setFieldVisibility('upiId', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
+              <button type="button" id="visBtn_upiId_hide" onclick="setFieldVisibility('upiId', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
+            </div>
+          </div>
           <input 
             type="text" 
             id="upiId" 
@@ -1094,6 +1155,51 @@
       });
     }
 
+    // =========================================================================
+    // FIELD VISIBILITY TOGGLES (SHOW = GREEN, HIDE = RED)
+    // =========================================================================
+    const fieldVisibilityState = {
+      customerName: true,
+      remainingAmount: true,
+      loanAmount: true,
+      receivedAmount: true,
+      bankAddress: true,
+      amountPaid: true,
+      overdueDays: true,
+      lateFee: true,
+      dates: true,
+      upiId: true
+    };
+
+    function updateVisibilityUI() {
+      for (const [field, isVisible] of Object.entries(fieldVisibilityState)) {
+        const showBtn = document.getElementById(`visBtn_${field}_show`);
+        const hideBtn = document.getElementById(`visBtn_${field}_hide`);
+        if (!showBtn || !hideBtn) continue;
+
+        const isCompact = (field === 'overdueDays' || field === 'lateFee');
+        const padClass = isCompact ? 'px-2 py-0.5 text-[10.5px]' : 'px-2.5 py-0.5 text-[11px]';
+
+        if (isVisible) {
+          showBtn.className = `${padClass} rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold`;
+          hideBtn.className = `${padClass} rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold bg-transparent`;
+        } else {
+          showBtn.className = `${padClass} rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold bg-transparent`;
+          hideBtn.className = `${padClass} rounded-md transition-all cursor-pointer bg-red-600 text-white shadow-xs font-bold`;
+        }
+      }
+    }
+
+    function setFieldVisibility(field, isVisible) {
+      if (Object.prototype.hasOwnProperty.call(fieldVisibilityState, field)) {
+        fieldVisibilityState[field] = !!isVisible;
+        updateVisibilityUI();
+      }
+    }
+    window.setFieldVisibility = setFieldVisibility;
+    // Initial sync
+    updateVisibilityUI();
+
     document.getElementById('createCustomerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('submitCustomerBtn');
@@ -1113,7 +1219,8 @@
         lateFee: document.getElementById('lateFee').value,
         amountReceivedDate: document.getElementById('amountReceivedDate').value,
         dueDate: document.getElementById('dueDate').value,
-        upiId: document.getElementById('upiId').value
+        upiId: document.getElementById('upiId').value,
+        visibility: { ...fieldVisibilityState }
       };
 
       try {
