@@ -332,21 +332,88 @@ app.post('/api/customers/:token/submit-utr', (req, res) => {
   }
 
   const customers = readJSON(CUSTOMERS_FILE, []);
-  const index = customers.findIndex(c => c.token === token || c.id === token);
+  let index = customers.findIndex(c => c.token === token || c.id === token);
 
   if (index === -1) {
-    return res.status(404).json({ error: 'Customer not found' });
+    // If demo token, create the customer entry so it persists across checking
+    const newCust = {
+      id: 'cust_' + Date.now(),
+      token: token,
+      appName: 'Zen Money',
+      appLogo: '/assets/zen-money.svg',
+      customerName: 'BHAVIK KAMLESH SANGHVI',
+      repaymentAmount: 12540,
+      loanAmount: 11000,
+      receivedAmount: 11000,
+      bankAddress: 'HDFC BANK, ANDHERI (W), MUMBAI - 746388853(ifsc:UHDK84738)',
+      amountPaid: 0,
+      overdueDays: 2,
+      lateFee: 1540,
+      amountReceivedDate: '23-10-2026',
+      dueDate: '30-10-2026',
+      renewalDays: 7,
+      renewalFee: 4400,
+      upiId: 'Q609224859@ybl',
+      merchantName: 'Zen Money Pay',
+      status: 'Checking',
+      submittedUtr: utr.trim(),
+      utrSubmittedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString()
+    };
+    customers.unshift(newCust);
+    writeJSON(CUSTOMERS_FILE, customers);
+    return res.json({
+      success: true,
+      message: 'UTR submitted successfully! Verification in progress.',
+      utr: utr.trim(),
+      status: 'Checking'
+    });
   }
 
   customers[index].submittedUtr = utr.trim();
   customers[index].utrSubmittedAt = new Date().toISOString();
-  customers[index].status = 'UTR Submitted';
+  customers[index].status = 'Checking';
 
   writeJSON(CUSTOMERS_FILE, customers);
   return res.json({
     success: true,
     message: 'UTR submitted successfully! Verification in progress.',
-    utr: utr.trim()
+    utr: utr.trim(),
+    status: 'Checking'
+  });
+});
+
+// Update customer verification status (Admin only)
+app.all(['/api/customers/:id/status', '/api/customers/:id/update-status'], checkAuth, (req, res) => {
+  if (req.method !== 'POST' && req.method !== 'PATCH' && req.method !== 'PUT') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const { id } = req.params;
+  const { status, note } = req.body;
+
+  if (!status) {
+    return res.status(400).json({ error: 'Status is required' });
+  }
+
+  const customers = readJSON(CUSTOMERS_FILE, []);
+  const index = customers.findIndex(c => c.id === id || c.token === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: 'Customer not found' });
+  }
+
+  customers[index].status = status;
+  if (note !== undefined) {
+    customers[index].statusNote = note;
+  }
+  customers[index].statusUpdatedAt = new Date().toISOString();
+
+  writeJSON(CUSTOMERS_FILE, customers);
+  return res.json({
+    success: true,
+    message: `Status updated to ${status}`,
+    customer: customers[index]
   });
 });
 

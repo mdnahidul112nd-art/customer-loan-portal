@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Create Customer</title>
+  <!-- Google Fonts: Playfair Display & Lora -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    *, html, body, input, select, button {
+      font-family: 'Playfair Display', 'Lora', Georgia, 'Times New Roman', serif;
+      -webkit-font-smoothing: antialiased;
+      box-sizing: border-box;
+    }
+    .body-font {
+      font-family: 'Lora', Georgia, serif;
+    }
+    body {
+      background-color: #f2f4f8;
+      margin: 0;
+      padding: 0;
+    }
+    input::placeholder {
+      font-family: 'Lora', Georgia, serif;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center bg-[#f2f4f8] py-5 px-3">
+
+  <!-- Floating Toast Notification -->
+  <div id="adminToast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden opacity-0 transition-all bg-[#1e2530] text-white text-[13px] px-4 py-2.5 rounded-full shadow-2xl font-bold flex items-center space-x-2 font-sans">
+    <span id="adminToastIcon">✓</span>
+    <span id="adminToastMsg">Status Updated</span>
+  </div>
+
+  <!-- Main View Container -->
+  <div class="w-full max-w-[720px] space-y-4">
+
+    <!-- Top Action Bar: Create Customer & Logout (Screenshot 2) -->
+    <div class="flex items-center justify-between px-1">
+      <h1 class="text-[26px] font-bold text-[#1a1a1a] tracking-tight">Create Customer</h1>
+      <button 
+        id="logoutBtn"
+        class="px-4 py-1.5 rounded-full bg-[#fde8e8] text-[#c81e1e] font-bold text-[14px] hover:bg-red-100 transition-colors shadow-sm"
+        Logout
+      </button>
+    </div>
+
+    <!-- Main Card: Customer Information (Screenshot 2: Pure White Card) -->
+    <div class="bg-white rounded-[22px] shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 p-6 space-y-4">
+      
+      <!-- Section Title (Exact Screenshot 2: No divider line, pure bold serif) -->
+      <h2 class="text-[18px] font-bold text-[#1a1a1a]">Customer Information</h2>
+
+      <form id="createCustomerForm" class="space-y-4">
+
+        <!-- App Name -->
+        <div>
+          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="appName">
+            App Name
+          </label>
+          <input 
+            type="text" 
+            id="appName" 
+            name="appName" 
+            value="Karta Loan" 
+            placeholder="Enter App Name"
+            required
+            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#1a1a1a] text-[15px] bg-white shadow-sm"
+          >
+        </div>
+
+        <!-- App Logo Selector -->
+        <div>
+          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="appLogoSelect">
+            App Logo
+          </label>
+          <div class="relative">
+            <select 
+              id="appLogoSelect" 
+              name="appLogo"
+              class="w-full appearance-none px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#1a1a1a] text-[15px] bg-white pr-10 cursor-pointer shadow-sm"
+            >
+              <!-- Populated dynamically via JS -->
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+              <svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- + Add New Logo Button (Screenshot 2) -->
+        <div>
+          <button 
+            type="button" 
+            id="openAddLogoModalBtn"
+            class="w-full py-3.5 px-4 rounded-full bg-[#edf1fe] hover:bg-[#e0e7ff] text-[#3543d8] font-bold text-[16px] transition-colors border border-indigo-100 flex items-center justify-center space-x-1 shadow-sm"
+          >
+            <span>+ Add New Logo</span>
+          </button>
+        </div>
+
+        <!-- Selected Logo Preview Box (Screenshot 2) -->
+        <div class="space-y-1">
+          <div class="w-full p-3 rounded-2xl bg-[#f8fafc] border border-gray-200 flex items-center space-x-3 shadow-inner">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden bg-white shadow-sm border border-gray-100 flex-shrink-0">
+              <img id="logoPreviewImg" src="/assets/karta-loan.svg" alt="App Logo" class="w-full h-full object-cover">
+            </div>
+            <div class="font-bold text-gray-800 text-[16px]" id="logoPreviewText">
+              Karta Loan
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="body-font text-[12px] text-gray-400" id="totalLogosCount">Total logos available: 41</span>
+          </div>
+        </div>
+
+        <!-- Customer Name -->
+        <div>
+          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="customerName">
+            Customer Name
+          </label>
+          <input 
+            type="text" 
+            id="customerName" 
+            name="customerName" 
+            placeholder="Customer Name"
+            value="BHAVIK KAMLESH SANGHVI"
+            required
+            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#1a1a1a] text-[15px] bg-white shadow-sm"
+          >
+        </div>
+
+        <!-- Remaining Amount (Screenshot 2 with Bengali subtext) -->
+        <div>
+          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="repaymentAmount">
+            Remaining Amount
+          </label>
+          <input 
+            type="number" 
+            id="repaymentAmount" 
+            name="repaymentAmount" 
+            value="12540" 
+            required
+            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#1a1a1a] text-[15px] bg-white font-bold shadow-sm"
+          >
+          <p class="text-[13px] text-gray-400 mt-1 font-sans">Customer page-এ এই amount দেখানো হবে।</p>
+        </div>
+
+        <!-- Loan Amount -->
+        <div>
+          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="loanAmount">
+            Loan Amount
+          </label>
+          <input 
+            type="number" 
+            id="loanAmount" 
+            name="loanAmount" 
+            value="11000" 
+            required
+            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#1a1a1a] text-[15px] bg-white shadow-sm"
+          >
+        </div>
+
+        <!-- Received Amount -->
+        <div>
+          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="receivedAmount">
+            Received amount
+          </label>
+          <input 
+            type="number" 
+            id="receivedAmount" 
+            name="receivedAmount" 
+            value="11000" 
+            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#1a1a1a] text-[15px] bg-white shadow-sm"
+          >
+        </div>
+
+        <!-- Bank Address -->
+        <div>
+          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="bankAddress">
+            Bank Address
+          </label>
+          <input 
+            type="text" 
+            id="bankAddress" 
+            name="bankAddress" 
+            value="HDFC BANK, ANDHERI (W), MUMBAI - 746388853(ifsc:UHDK84738)" 
+            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#1a1a1a] text-[13px] bg-white shadow-sm"
+          >
+        </div>
+
+        <!-- Amount Paid -->
+        <div>
+          <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="amountPaid">
+            Amount Paid
+          </label>
+          <input 
+            type="number" 
+            id="amountPaid" 
+            name="amountPaid" 
+            value="0" 
+            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[15px] bg-white shadow-sm"
+          >
+        </div>
+
+        <!-- Overdue Days & Late Fee -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="overdueDays">
+              Over Due (Days)
+            </label>
+            <input 
+              type="number" 
+              id="overdueDays" 
+              name="overdueDays" 
+              value="2" 
+              class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none text-[#be185d] font-bold text-[15px] bg-white shadow-sm"
+            >
+          </div>
+          <div>
+            <label class="block text-[15px] font-bold text-[#1a1a1a] mb-1.5" for="lateFee">
+              Late Fee (₹)
+            </label>
+            <input 
+              type="number" 
+              id="lateFee" 
+              name="lateFee" 
+              value="1540" 
+              class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] font-bold text-[15px] bg-white shadow-sm"
+            >
+          </div>
+        </div>
+
+        <!-- Dates -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[14px] font-bold text-[#1a1a1a] mb-1.5" for="amountReceivedDate">
+              Received Date
+            </label>
+            <input 
+              type="text" 
+              id="amountReceivedDate" 
+              name="amountReceivedDate" 
+              value="23-10-2026" 
+              class="w-full px-3 py-3 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[14px] bg-white shadow-sm"
+            >
+          </div>
+          <div>
+            <label class="block text-[14px] font-bold text-[#1a1a1a] mb-1.5" for="dueDate">
+              Due Date
+            </label>
+            <input 
+              type="text" 
+              id="dueDate" 
+              name="dueDate" 
+              value="30-10-2026" 
+              class="w-full px-3 py-3 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[14px] bg-white shadow-sm"
+            >
+          </div>
+        </div>
+
+        <!-- UPI ID Setting -->
+        <div class="p-4 bg-purple-50/70 border border-purple-200 rounded-2xl space-y-2">
+          <label class="block text-[14px] font-bold text-purple-900" for="upiId">
+            Payment UPI ID (Generating QR & Copy Option)
+          </label>
+          <input 
+            type="text" 
+            id="upiId" 
+            name="upiId" 
+            value="Q609224859@ybl" 
+            required
+            class="w-full px-3.5 py-2.5 rounded-xl border border-purple-300 focus:outline-none text-gray-800 text-sm bg-white font-mono shadow-sm"
+          >
+          <p class="body-font text-[12px] text-gray-500">কাস্টমার পেজে এই UPI ঠিকানার QR কোড ডায়নামিকালি তৈরি হবে।</p>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-3">
+          <button 
+            type="submit" 
+            id="submitCustomerBtn"
+            class="w-full py-4 px-6 rounded-full bg-[#3442d9] hover:bg-[#2835b8] text-white font-bold text-[18px] shadow-lg shadow-indigo-500/20 transition-all active:scale-[0.98] text-center"
+          >
+            Create Customer & Generate Link
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Generated Link Result Card -->
+    <div id="newLinkCard" class="hidden bg-white border-2 border-indigo-500 rounded-[22px] p-5 shadow-xl space-y-3">
+      <div class="flex items-center space-x-2 text-indigo-700 font-bold text-[16px]">
+        <span>✓</span>
+        <span>Customer Link Created Successfully!</span>
+      </div>
+      <p class="body-font text-xs text-gray-600">নিচের লিংকটি কপি করে কাস্টমারকে শেয়ার করুন:</p>
+      
+      <div class="flex items-center bg-gray-50 border border-gray-200 rounded-2xl p-2">
+        <input 
+          type="text" 
+          id="generatedLinkInput" 
+          readonly 
+          class="flex-1 bg-transparent px-2 text-xs text-gray-800 font-mono select-all focus:outline-none"
+        >
+        <button 
+          id="copyGeneratedLinkBtn"
+          class="px-3.5 py-2 bg-[#3442d9] text-white text-xs font-bold rounded-xl shadow transition-all active:scale-95"
+        >
+          Copy Link
+        </button>
+      </div>
+
+      <div class="text-right">
+        <a 
+          id="openGeneratedLinkBtn" 
+          href="#" 
+          target="_blank"
+          class="px-4 py-2 bg-gray-900 text-white text-xs font-bold rounded-xl inline-flex items-center space-x-1"
+        >
+          <span>Open Customer Page ↗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Customer Management Table -->
+    <div class="bg-white rounded-[22px] shadow-sm border border-gray-100 p-5 space-y-3">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-[17px] font-bold text-[#1a1a1a]">All Customers</h2>
+          <p class="text-[12px] text-gray-500 font-sans">Manage customer links, review UTR submissions & select payment verification results</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span> Live Auto-Sync
+          </span>
+          <button onclick="loadCustomers()" class="px-3 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold rounded-lg border border-indigo-200 transition-all">Refresh</button>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="border-b border-gray-200 text-gray-500 uppercase font-bold tracking-wider bg-gray-50/70">
+              <th class="py-3 px-3">App</th>
+              <th class="py-3 px-3">Customer</th>
+              <th class="py-3 px-3">Amount</th>
+              <th class="py-3 px-3 min-w-[280px]">UTR & Result Control</th>
+              <th class="py-3 px-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="customersTableBody" class="divide-y divide-gray-100">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Add Logo Modal -->
+  <div id="addLogoModal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-gray-100 mb-4">
+        <h3 class="font-bold text-gray-900 text-lg">Add New Logo</h3>
+        <button id="closeAddLogoModalBtn" class="text-gray-400 hover:text-gray-600 text-lg">✕</button>
+      </div>
+
+      <form id="uploadLogoForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-1" for="modalAppName">
+            App Name
+          </label>
+          <input 
+            type="text" 
+            id="modalAppName" 
+            placeholder="e.g. Zen Money, Speed Cash" 
+            required
+            class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none text-sm"
+          >
+        </div>
+
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-1" for="modalLogoFile">
+            Upload Logo Image
+          </label>
+          <input 
+            type="file" 
+            id="modalLogoFile" 
+            accept="image/*" 
+            required
+            class="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm"
+          >
+        </div>
+
+        <div class="pt-2 flex space-x-3">
+          <button 
+            type="button" 
+            id="cancelLogoBtn"
+            class="w-1/2 py-2.5 rounded-xl border border-gray-200 font-bold text-gray-600 hover:bg-gray-50 text-sm"
+          >
+            Cancel
+          </button>
+          <button 
+            type="submit" 
+            id="saveLogoBtn"
+            class="w-1/2 py-2.5 rounded-xl bg-[#3442d9] text-white font-bold text-sm shadow transition-all"
+          >
+            Upload & Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let allLogos = [];
+
+    async function checkAuth() {
+      try {
+        const res = await fetch('/api/auth/me');
+        const data = await res.json();
+        if (!data.loggedIn) window.location.href = '/login';
+      } catch (err) {
+        window.location.href = '/login';
+      }
+    }
+    checkAuth();
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      window.location.href = '/login';
+    });
+
+    async function loadLogos() {
+      try {
+        const res = await fetch('/api/logos');
+        const data = await res.json();
+        allLogos = data.logos || [];
+
+        const select = document.getElementById('appLogoSelect');
+        select.innerHTML = '';
+        allLogos.forEach(logo => {
+          const opt = document.createElement('option');
+          opt.value = logo.icon;
+          opt.textContent = logo.name;
+          opt.dataset.name = logo.name;
+          select.appendChild(opt);
+        });
+
+        document.getElementById('totalLogosCount').textContent = `Total logos available: ${allLogos.length}`;
+
+        if (allLogos.length > 0) {
+          updateLogoPreview(allLogos[0].icon, allLogos[0].name);
+        }
+      } catch (err) {
+        console.error('Failed to load logos:', err);
+      }
+    }
+
+    function updateLogoPreview(iconUrl, name) {
+      document.getElementById('logoPreviewImg').src = iconUrl;
+      document.getElementById('logoPreviewText').textContent = name;
+      document.getElementById('appName').value = name;
+    }
+
+    document.getElementById('appLogoSelect').addEventListener('change', (e) => {
+      const selectedOption = e.target.options[e.target.selectedIndex];
+      updateLogoPreview(selectedOption.value, selectedOption.dataset.name);
+    });
+
+    const modal = document.getElementById('addLogoModal');
+    document.getElementById('openAddLogoModalBtn').addEventListener('click', () => modal.classList.remove('hidden'));
+    document.getElementById('closeAddLogoModalBtn').addEventListener('click', () => modal.classList.add('hidden'));
+    document.getElementById('cancelLogoBtn').addEventListener('click', () => modal.classList.add('hidden'));
+
+    document.getElementById('uploadLogoForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const saveBtn = document.getElementById('saveLogoBtn');
+      saveBtn.disabled = true;
+      saveBtn.innerText = 'Uploading...';
+
+      const appName = document.getElementById('modalAppName').value;
+      const fileInput = document.getElementById('modalLogoFile');
+
+      const formData = new FormData();
+      formData.append('appName', appName);
+      formData.append('logoFile', fileInput.files[0]);
+
+      try {
+        const res = await fetch('/api/logos/upload', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          modal.classList.add('hidden');
+          document.getElementById('uploadLogoForm').reset();
+          await loadLogos();
+          document.getElementById('appLogoSelect').value = data.logo.icon;
+          updateLogoPreview(data.logo.icon, data.logo.name);
+        } else {
+          alert(data.error || 'Upload failed');
+        }
+      } catch (err) {
+        alert('Upload failed: ' + err.message);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerText = 'Upload & Save';
+      }
+    });
+
+    document.getElementById('createCustomerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitCustomerBtn');
+      btn.disabled = true;
+      btn.innerText = 'Creating...';
+
+      const select = document.getElementById('appLogoSelect');
+
+      const payload = {
+        appName: document.getElementById('appName').value,
+        appLogo: select.value,
+        customerName: document.getElementById('customerName').value,
+        repaymentAmount: document.getElementById('repaymentAmount').value,
+        loanAmount: document.getElementById('loanAmount').value,
+        receivedAmount: document.getElementById('receivedAmount').value,
+        bankAddress: document.getElementById('bankAddress').value,
+        amountPaid: document.getElementById('amountPaid').value,
+        overdueDays: document.getElementById('overdueDays').value,
+        lateFee: document.getElementById('lateFee').value,
+        amountReceivedDate: document.getElementById('amountReceivedDate').value,
+        dueDate: document.getElementById('dueDate').value,
+        upiId: document.getElementById('upiId').value
+      };
+
+      try {
+        const res = await fetch('/api/customers', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          const fullLink = `${window.location.origin}${data.link}`;
+          document.getElementById('generatedLinkInput').value = fullLink;
+          document.getElementById('openGeneratedLinkBtn').href = data.link;
+          document.getElementById('newLinkCard').classList.remove('hidden');
+          document.getElementById('newLinkCard').scrollIntoView({ behavior: 'smooth' });
+          await loadCustomers();
+        } else {
+          alert(data.error || 'Failed to create customer');
+        }
+      } catch (err) {
+        alert('Error: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Create Customer & Generate Link';
+      }
+    });
+
+    document.getElementById('copyGeneratedLinkBtn').addEventListener('click', () => {
+      const input = document.getElementById('generatedLinkInput');
+      input.select();
+      navigator.clipboard.writeText(input.value);
+      const btn = document.getElementById('copyGeneratedLinkBtn');
+      btn.innerText = 'Copied!';
+      btn.classList.replace('bg-[#3442d9]', 'bg-green-600');
+      setTimeout(() => {
+        btn.innerText = 'Copy Link';
+        btn.classList.replace('bg-green-600', 'bg-[#3442d9]');
+      }, 2000);
+    });
+
+    function showToast(msg, icon = '✓') {
+      const toast = document.getElementById('adminToast');
+      if (!toast) return;
+      document.getElementById('adminToastMsg').innerText = msg;
+      document.getElementById('adminToastIcon').innerText = icon;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.style.opacity = '1', 10);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.classList.add('hidden'), 300);
+      }, 2500);
+    }
+
+    async function changeCustomerStatus(id, newStatus) {
+      try {
+        const res = await fetch(`/api/customers/${id}/status`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast(`Result set: ${newStatus}`, '✓');
+          await loadCustomers();
+        } else {
+          alert(data.error || 'Failed to update status');
+        }
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+
+    async function loadCustomers() {
+      try {
+        const res = await fetch('/api/customers');
+        const data = await res.json();
+        const tbody = document.getElementById('customersTableBody');
+        tbody.innerHTML = '';
+
+        if (!data.customers || data.customers.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-gray-400 body-font">কোন কাস্টমার পাওয়া যায়নি (No customers created yet)</td></tr>`;
+          return;
+        }
+
+        data.customers.forEach(cust => {
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-indigo-50/20 transition-colors';
+
+          const status = cust.status || 'Pending';
+          const isChecking = status === 'Checking' || status === 'UTR Submitted';
+
+          let statusBadge = '';
+          if (isChecking) {
+            statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-purple-100 text-purple-800 border border-purple-200 shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-purple-600 animate-ping"></span> ⏳ Checking / In Review</span>`;
+          } else if (status === 'Payment Success') {
+            statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800 border border-green-200 shadow-sm">✓ Payment Success</span>`;
+          } else if (status === 'Payment Failed') {
+            statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-100 text-red-800 border border-red-200 shadow-sm">✕ Payment Failed</span>`;
+          } else if (status === 'UTR Not Matched') {
+            statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200 shadow-sm">⚠ UTR Not Matched</span>`;
+          } else if (status === 'Bank Not Matched') {
+            statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-orange-100 text-orange-800 border border-orange-200 shadow-sm">🏦 Bank Not Matched</span>`;
+          } else {
+            statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-gray-100 text-gray-600">Pending</span>`;
+          }
+
+          const utrDisplay = cust.submittedUtr
+            ? `<div class="space-y-1.5 py-1">
+                <div class="flex items-center space-x-2">
+                  <span class="font-mono font-bold text-gray-900 text-[13px] bg-gray-100 px-2 py-0.5 rounded border border-gray-200 tracking-wider">${cust.submittedUtr}</span>
+                  <button onclick="copyToClipboard('${cust.submittedUtr}', this)" class="px-2 py-0.5 text-[10.5px] bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded font-bold transition-colors">Copy</button>
+                  ${cust.utrSubmittedAt ? `<span class="text-[10.5px] text-gray-400 font-sans">${new Date(cust.utrSubmittedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>` : ''}
+                </div>
+                <div>${statusBadge}</div>
+                <div class="pt-1 space-y-1">
+                  <div class="flex items-center space-x-1.5">
+                    <span class="text-[11px] font-bold text-gray-500">Set Result:</span>
+                    <select onchange="changeCustomerStatus('${cust.id}', this.value)" class="text-xs font-bold border border-gray-300 rounded-lg px-2 py-1 bg-white hover:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer shadow-sm">
+                      <option value="Checking" ${isChecking ? 'selected' : ''}>⏳ Checking / In Review</option>
+                      <option value="Payment Success" ${status === 'Payment Success' ? 'selected' : ''}>✓ Payment Success</option>
+                      <option value="Payment Failed" ${status === 'Payment Failed' ? 'selected' : ''}>✕ Payment Failed</option>
+                      <option value="UTR Not Matched" ${status === 'UTR Not Matched' ? 'selected' : ''}>⚠ UTR Not Matched</option>
+                      <option value="Bank Not Matched" ${status === 'Bank Not Matched' ? 'selected' : ''}>🏦 Bank Not Matched</option>
+                      <option value="Pending" ${status === 'Pending' ? 'selected' : ''}>Pending</option>
+                    </select>
+                  </div>
+                  <div class="flex flex-wrap gap-1 pt-0.5">
+                    <button onclick="changeCustomerStatus('${cust.id}', 'Payment Success')" class="px-2 py-0.5 text-[10.5px] font-bold rounded bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 transition-all ${status === 'Payment Success' ? 'ring-2 ring-green-600 bg-green-100 font-black' : ''}">✓ Success</button>
+                    <button onclick="changeCustomerStatus('${cust.id}', 'Payment Failed')" class="px-2 py-0.5 text-[10.5px] font-bold rounded bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 transition-all ${status === 'Payment Failed' ? 'ring-2 ring-red-600 bg-red-100 font-black' : ''}">✕ Failed</button>
+                    <button onclick="changeCustomerStatus('${cust.id}', 'UTR Not Matched')" class="px-2 py-0.5 text-[10.5px] font-bold rounded bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200 transition-all ${status === 'UTR Not Matched' ? 'ring-2 ring-amber-600 bg-amber-100 font-black' : ''}">⚠ UTR Mismatch</button>
+                    <button onclick="changeCustomerStatus('${cust.id}', 'Bank Not Matched')" class="px-2 py-0.5 text-[10.5px] font-bold rounded bg-orange-50 text-orange-800 hover:bg-orange-100 border border-orange-200 transition-all ${status === 'Bank Not Matched' ? 'ring-2 ring-orange-600 bg-orange-100 font-black' : ''}">🏦 Bank Mismatch</button>
+                    <button onclick="changeCustomerStatus('${cust.id}', 'Checking')" class="px-2 py-0.5 text-[10.5px] font-bold rounded bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition-all ${isChecking ? 'ring-2 ring-purple-600 bg-purple-100 font-black' : ''}">🔄 Checking</button>
+                  </div>
+                </div>
+              </div>`
+            : `<div class="space-y-1.5 py-1">
+                <span class="text-gray-400 text-[11px] italic">Awaiting customer payment & UTR</span>
+                <div>${statusBadge}</div>
+                <div class="flex items-center space-x-1.5 pt-1">
+                  <span class="text-[10px] font-bold text-gray-500">Test Result:</span>
+                  <select onchange="changeCustomerStatus('${cust.id}', this.value)" class="text-xs font-semibold border border-gray-200 rounded-lg px-2 py-0.5 bg-white cursor-pointer text-gray-600">
+                    <option value="Pending" ${status === 'Pending' ? 'selected' : ''}>Pending</option>
+                    <option value="Checking" ${isChecking ? 'selected' : ''}>⏳ Checking</option>
+                    <option value="Payment Success" ${status === 'Payment Success' ? 'selected' : ''}>✓ Payment Success</option>
+                    <option value="Payment Failed" ${status === 'Payment Failed' ? 'selected' : ''}>✕ Payment Failed</option>
+                    <option value="UTR Not Matched" ${status === 'UTR Not Matched' ? 'selected' : ''}>⚠ UTR Not Matched</option>
+                    <option value="Bank Not Matched" ${status === 'Bank Not Matched' ? 'selected' : ''}>🏦 Bank Not Matched</option>
+                  </select>
+                </div>
+              </div>`;
+
+          const fullLink = `${window.location.origin}/pay/${cust.token}`;
+
+          tr.innerHTML = `
+            <td class="py-3 px-3 align-top">
+              <div class="flex items-center space-x-2">
+                <img src="${cust.appLogo}" class="w-7 h-7 rounded-lg object-cover border flex-shrink-0" alt="logo">
+                <span class="font-bold text-gray-900 text-xs">${cust.appName}</span>
+              </div>
+            </td>
+            <td class="py-3 px-3 align-top">
+              <div class="font-bold text-gray-900 text-xs">${cust.customerName}</div>
+              <div class="text-[11px] text-gray-500">Loan: ₹ ${Number(cust.loanAmount || cust.repaymentAmount).toLocaleString()}</div>
+            </td>
+            <td class="py-3 px-3 align-top font-bold text-indigo-700 text-xs whitespace-nowrap">
+              ₹ ${Number(cust.repaymentAmount).toLocaleString()}
+            </td>
+            <td class="py-3 px-3 align-top">
+              ${utrDisplay}
+            </td>
+            <td class="py-3 px-3 align-top text-right space-x-1 whitespace-nowrap">
+              <button onclick="copyToClipboard('${fullLink}', this)" class="px-2.5 py-1 text-xs bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-lg font-bold border border-indigo-100 transition-colors" title="Copy Link">Copy Link</button>
+              <a href="/pay/${cust.token}" target="_blank" class="px-2.5 py-1 text-xs bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-lg font-bold transition-colors">View</a>
+              <button onclick="deleteCustomer('${cust.id}')" class="px-2 py-1 text-xs bg-red-50 text-red-600 hover:bg-red-100 rounded-lg font-bold transition-colors" title="Delete">✕</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        console.error('Failed to load customers:', err);
+      }
+    }
+
+    function copyToClipboard(text, btn) {
+      navigator.clipboard.writeText(text);
+      const original = btn.innerText;
+      btn.innerText = 'Copied!';
+      setTimeout(() => btn.innerText = original, 1500);
+    }
+
+    async function deleteCustomer(id) {
+      if (!confirm('Are you sure you want to delete this customer?')) return;
+      try {
+        await fetch(`/api/customers/${id}`, { method: 'DELETE' });
+        loadCustomers();
+      } catch (err) {
+        alert('Delete failed');
+      }
+    }
+
+    loadLogos();
+    loadCustomers();
+
+    // Auto-refresh customer list every 3.5 seconds for real-time dashboard updates
+    setInterval(loadCustomers, 3500);
+  </script>
+</body>
+</html>

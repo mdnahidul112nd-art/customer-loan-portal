@@ -18,10 +18,11 @@
     "renewalFee": 4400,
     "upiId": "Q609224859@ybl",
     "merchantName": "Zen Money Pay",
-    "status": "UTR Submitted",
+    "status": "Checking",
     "submittedUtr": "889308889660",
     "utrSubmittedAt": "2026-11-08T01:21:09.245Z",
-    "createdAt": "2026-11-07T23:09:20.980Z"
+    "createdAt": "2026-11-07T23:09:20.980Z",
+    "statusUpdatedAt": "2026-11-08T02:06:37.998Z"
   },
   {
     "id": "c1002",
