@@ -301,33 +301,40 @@ app.post('/api/customers', checkAuth, (req, res) => {
     const customers = readJSON(CUSTOMERS_FILE, []);
 
     const token = generateRandomToken(7);
+    const isAuto = data.autoCalculate !== false;
     const loanAmount = parseFloat(data.loanAmount) || 0;
     const amountPaid = parseFloat(data.amountPaid) || 0;
 
-    // Calculate loan plan using 7-day term and overdue/fee formulas
-    const plan = calculateLoanPlan({
-      loanAmount: loanAmount,
-      amountPaid: amountPaid,
-      amountReceivedDate: data.amountReceivedDate,
-      dueDate: data.dueDate,
-      overdueDays: data.overdueDays
-    });
+    let receivedAmount = parseFloat(data.receivedAmount);
+    let overdueDays = parseInt(data.overdueDays, 10);
+    let lateFee = parseFloat(data.lateFee);
+    let repaymentAmount = parseFloat(data.repaymentAmount);
+    let receivedDate = data.amountReceivedDate;
+    let dueDate = data.dueDate;
 
-    const receivedAmount = (data.receivedAmount !== undefined && data.receivedAmount !== '' && !isNaN(data.receivedAmount))
-      ? parseFloat(data.receivedAmount)
-      : plan.receivedAmount;
+    if (isAuto) {
+      const plan = calculateLoanPlan({
+        loanAmount: loanAmount,
+        amountPaid: amountPaid,
+        amountReceivedDate: data.amountReceivedDate,
+        dueDate: data.dueDate,
+        overdueDays: data.overdueDays
+      });
 
-    const overdueDays = (data.overdueDays !== undefined && data.overdueDays !== '' && !isNaN(data.overdueDays))
-      ? parseInt(data.overdueDays, 10)
-      : plan.overdueDays;
-
-    const lateFee = (data.lateFee !== undefined && data.lateFee !== '' && !isNaN(data.lateFee))
-      ? parseFloat(data.lateFee)
-      : plan.lateFee;
-
-    const repaymentAmount = (data.repaymentAmount !== undefined && data.repaymentAmount !== '' && !isNaN(data.repaymentAmount))
-      ? parseFloat(data.repaymentAmount)
-      : plan.remainingAmount;
+      if (isNaN(receivedAmount)) receivedAmount = plan.receivedAmount;
+      if (isNaN(overdueDays)) overdueDays = plan.overdueDays;
+      if (isNaN(lateFee)) lateFee = plan.lateFee;
+      if (isNaN(repaymentAmount)) repaymentAmount = plan.remainingAmount;
+      if (!receivedDate) receivedDate = plan.amountReceivedDate;
+      if (!dueDate) dueDate = plan.dueDate;
+    } else {
+      if (isNaN(receivedAmount)) receivedAmount = loanAmount;
+      if (isNaN(overdueDays)) overdueDays = 0;
+      if (isNaN(lateFee)) lateFee = 0;
+      if (isNaN(repaymentAmount)) repaymentAmount = Math.max(0, loanAmount - amountPaid);
+      if (!receivedDate) receivedDate = new Date().toISOString().split('T')[0];
+      if (!dueDate) dueDate = new Date().toISOString().split('T')[0];
+    }
 
     const renewalFee = Math.round(repaymentAmount * 0.40);
 
@@ -361,12 +368,13 @@ app.post('/api/customers', checkAuth, (req, res) => {
       amountPaid: amountPaid,
       overdueDays: overdueDays,
       lateFee: lateFee,
-      amountReceivedDate: plan.amountReceivedDate || data.amountReceivedDate || new Date().toISOString().split('T')[0],
-      dueDate: plan.dueDate || data.dueDate || new Date().toISOString().split('T')[0],
+      amountReceivedDate: receivedDate || data.amountReceivedDate || '02-Nov-2026',
+      dueDate: dueDate || data.dueDate || '08-Nov-2026',
       renewalDays: parseInt(data.renewalDays, 10) || 7,
       renewalFee: renewalFee,
       upiId: data.upiId || 'Q609224859@ybl',
       merchantName: data.merchantName || chosenAppName,
+      autoCalculate: isAuto,
       visibility: visibility,
       status: 'Pending',
       submittedUtr: null,

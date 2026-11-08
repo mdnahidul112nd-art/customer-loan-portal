@@ -187,6 +187,50 @@
           </div>
         </div>
 
+        <!-- ========================================================================= -->
+        <!-- AUTO CALCULATOR ON / OFF TOGGLE OPTION -->
+        <!-- ========================================================================= -->
+        <div id="autoCalcContainer" class="p-3.5 sm:p-4 rounded-2xl border transition-all duration-200" style="background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-color: #86efac;">
+          <div class="flex items-center justify-between gap-3 flex-wrap">
+            <div class="flex items-center gap-2.5">
+              <span id="autoCalcStatusDot" class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[14.5px] font-extrabold text-gray-900 flex items-center gap-1.5 font-sans">
+                    ⚡ Auto Calculator
+                  </span>
+                  <span id="autoCalcBadge" class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                    ACTIVE (ON)
+                  </span>
+                </div>
+                <p id="autoCalcSubtext" class="text-[11.5px] text-gray-600 mt-0.5 font-sans leading-tight">
+                  Auto-syncs 7-Day Term (<span class="font-bold text-emerald-800">02-Nov ↔ 08-Nov</span>), 60% Received Amount, Overdue Days, 7% Daily Late Fee & Remaining Amount.
+                </p>
+              </div>
+            </div>
+            
+            <!-- Segmented ON / OFF Toggle Buttons -->
+            <div class="inline-flex items-center p-1 bg-white rounded-xl border border-gray-200 shadow-xs select-none">
+              <button 
+                type="button" 
+                id="autoCalcOnBtn" 
+                onclick="setAutoCalculator(true)"
+                class="px-4 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer bg-emerald-600 text-white shadow-xs"
+              >
+                ON
+              </button>
+              <button 
+                type="button" 
+                id="autoCalcOffBtn" 
+                onclick="setAutoCalculator(false)"
+                class="px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer text-gray-500 hover:text-gray-800 bg-transparent"
+              >
+                OFF
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- Customer Name -->
         <div>
           <div class="flex items-center justify-between mb-1.5">
@@ -310,7 +354,7 @@
                 Dates
               </label>
               <span class="text-[10px] font-extrabold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full">
-                7 Days Term Auto-Sync
+                7-Day Term (02-Nov ↔ 08-Nov)
               </span>
             </div>
             <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
@@ -320,29 +364,29 @@
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-[12px] font-semibold text-gray-600 mb-1" for="amountReceivedDate">Received Date (7d before Due)</label>
+              <label class="block text-[12px] font-semibold text-gray-600 mb-1" for="amountReceivedDate">Received Date (Start)</label>
               <input 
                 type="text" 
                 id="amountReceivedDate" 
                 name="amountReceivedDate" 
-                value="23-10-2026" 
-                placeholder="DD-MM-YYYY"
+                value="02-Nov-2026" 
+                placeholder="02-Nov-2026"
                 class="w-full px-3 py-2.5 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[14px] bg-white shadow-sm font-medium"
               >
             </div>
             <div>
-              <label class="block text-[12px] font-semibold text-gray-600 mb-1" for="dueDate">Due Date (7d after Received)</label>
+              <label class="block text-[12px] font-semibold text-gray-600 mb-1" for="dueDate">Due Date (7-Day Term)</label>
               <input 
                 type="text" 
                 id="dueDate" 
                 name="dueDate" 
-                value="30-10-2026" 
-                placeholder="DD-MM-YYYY"
+                value="08-Nov-2026" 
+                placeholder="08-Nov-2026"
                 class="w-full px-3 py-2.5 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[14px] bg-white shadow-sm font-medium"
               >
             </div>
           </div>
-          <p class="text-[12px] text-gray-500 mt-1 font-sans">Enter either Date: the other automatically syncs to exact 7 days.</p>
+          <p class="text-[12px] text-gray-500 mt-1 font-sans">7-Day Loan Term: <span class="font-semibold text-indigo-700">02-Nov-2026 to 08-Nov-2026</span>. When Auto Calculator is ON, entering either date auto-syncs the other.</p>
         </div>
 
         <!-- Overdue Days & Late Fee -->
@@ -1243,20 +1287,98 @@
 
     // =========================================================================
     // SMART LOAN CALCULATION RULES & AUTO-SYNC
-    // 1. 7-Day Term: Received Date <-> Due Date auto-sync (+/- 7 days)
+    // 1. 7-Day Term: Received Date <-> Due Date auto-sync (e.g. 02-Nov-2026 to 08-Nov-2026, +6 / -6 days)
     // 2. Overdue Days: counts delay past Due Date
     // 3. Late Fee: 7% per overdue day on unpaid principal (Loan - Paid)
     // 4. Received Amount: 60% of Loan Amount always (40% interest deducted)
     // 5. Remaining Amount: {(Loan Amount + Late Fee) - Amount Paid}
     // 6. Renew: 40% of Remaining Amount
+    // 7. Auto Calculator ON / OFF: can be toggled anytime for manual overrides
     // =========================================================================
+    let autoCalculateEnabled = true;
+    const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const MONTH_MAP = {
+      jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+      jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
+    };
+
+    function setAutoCalculator(enabled) {
+      autoCalculateEnabled = !!enabled;
+      const container = document.getElementById('autoCalcContainer');
+      const onBtn = document.getElementById('autoCalcOnBtn');
+      const offBtn = document.getElementById('autoCalcOffBtn');
+      const statusDot = document.getElementById('autoCalcStatusDot');
+      const badge = document.getElementById('autoCalcBadge');
+      const subtext = document.getElementById('autoCalcSubtext');
+
+      if (autoCalculateEnabled) {
+        if (container) {
+          container.style.background = 'linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%)';
+          container.style.borderColor = '#86efac';
+        }
+        if (statusDot) {
+          statusDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0';
+        }
+        if (badge) {
+          badge.className = 'text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300';
+          badge.textContent = 'ACTIVE (ON)';
+        }
+        if (subtext) {
+          subtext.innerHTML = 'Auto-syncs 7-Day Term (<span class="font-bold text-emerald-800">02-Nov ↔ 08-Nov</span>), 60% Received Amount, Overdue Days, 7% Daily Late Fee & Remaining Amount.';
+        }
+        if (onBtn) {
+          onBtn.className = 'px-4 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer bg-emerald-600 text-white shadow-xs';
+        }
+        if (offBtn) {
+          offBtn.className = 'px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer text-gray-500 hover:text-gray-800 bg-transparent';
+        }
+        // Immediately sync fields with active auto calculation rules
+        recalculateLoanForm('all');
+      } else {
+        if (container) {
+          container.style.background = 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)';
+          container.style.borderColor = '#cbd5e1';
+        }
+        if (statusDot) {
+          statusDot.className = 'w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0';
+        }
+        if (badge) {
+          badge.className = 'text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-gray-200 text-gray-700 border border-gray-300';
+          badge.textContent = 'DISABLED (OFF)';
+        }
+        if (subtext) {
+          subtext.innerHTML = '<span class="font-bold text-rose-700">Manual Mode Active.</span> Automatic calculations and date shifts are paused. You can freely edit any field without overrides.';
+        }
+        if (onBtn) {
+          onBtn.className = 'px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer text-gray-500 hover:text-gray-800 bg-transparent';
+        }
+        if (offBtn) {
+          offBtn.className = 'px-4 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer bg-rose-600 text-white shadow-xs';
+        }
+        // Update breakdown info to reflect manual mode
+        recalculateLoanForm('manual');
+      }
+    }
+    window.setAutoCalculator = setAutoCalculator;
+
     function parseAppDate(str) {
       if (!str) return null;
       const s = String(str).trim();
+      // YYYY-MM-DD
       let m = s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
       if (m) {
         return new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10));
       }
+      // DD-MMM-YYYY (e.g. 02-Nov-2026 or 2-Nov-2026)
+      m = s.match(/^(\d{1,2})[-/ ]([A-Za-z]{3,9})[-/ ](\d{4})$/);
+      if (m) {
+        const monStr = m[2].substring(0, 3).toLowerCase();
+        const monIdx = MONTH_MAP[monStr];
+        if (monIdx !== undefined) {
+          return new Date(parseInt(m[3], 10), monIdx, parseInt(m[1], 10));
+        }
+      }
+      // DD-MM-YYYY
       m = s.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
       if (m) {
         return new Date(parseInt(m[3], 10), parseInt(m[2], 10) - 1, parseInt(m[1], 10));
@@ -1265,13 +1387,21 @@
       return isNaN(d.getTime()) ? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
     }
 
-    function formatAppDate(date, preferFormat = 'DD-MM-YYYY') {
+    function formatAppDate(date, originalStr = '') {
       if (!date || isNaN(date.getTime())) return '';
       const d = String(date.getDate()).padStart(2, '0');
-      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const mNum = String(date.getMonth() + 1).padStart(2, '0');
+      const mName = MONTH_NAMES[date.getMonth()];
       const y = date.getFullYear();
-      if (preferFormat === 'YYYY-MM-DD') return `${y}-${m}-${d}`;
-      return `${d}-${m}-${y}`;
+
+      if (/^\d{4}[-/]/.test(String(originalStr).trim())) {
+        return `${y}-${mNum}-${d}`;
+      }
+      if (/^\d{1,2}[-/]\d{1,2}[-/]\d{4}$/.test(String(originalStr).trim())) {
+        return `${d}-${mNum}-${y}`;
+      }
+      // Default standard format matching user specification: 02-Nov-2026
+      return `${d}-${mName}-${y}`;
     }
 
     function shiftAppDate(dateStr, days) {
@@ -1279,8 +1409,7 @@
       if (!dt) return '';
       const res = new Date(dt.getTime());
       res.setDate(res.getDate() + days);
-      const isYmd = String(dateStr).trim().match(/^\d{4}[-/]/);
-      return formatAppDate(res, isYmd ? 'YYYY-MM-DD' : 'DD-MM-YYYY');
+      return formatAppDate(res, dateStr);
     }
 
     function computeOverdueDaysFromDueDate(dueDateStr) {
@@ -1297,6 +1426,31 @@
 
     function recalculateLoanForm(triggerSource = 'all') {
       if (isAutoCalculating) return;
+
+      // Handle Manual Override mode when Auto Calculator is turned OFF
+      if (!autoCalculateEnabled) {
+        const remainingInput = document.getElementById('repaymentAmount');
+        const renewPreviewEl = document.getElementById('calcRenewPreviewVal');
+        const calcFormulaEl = document.getElementById('calcFormulaBreakdown');
+        const loanInput = document.getElementById('loanAmount');
+        const lateFeeInput = document.getElementById('lateFee');
+        const paidInput = document.getElementById('amountPaid');
+
+        if (remainingInput && renewPreviewEl) {
+          const remVal = Math.max(0, parseFloat(remainingInput.value) || 0);
+          const renewAmount = Math.round(remVal * 0.40);
+          renewPreviewEl.textContent = `₹ ${renewAmount.toLocaleString()}`;
+        }
+        if (calcFormulaEl && loanInput && lateFeeInput && paidInput && remainingInput) {
+          const loanVal = parseFloat(loanInput.value) || 0;
+          const lateFeeVal = parseFloat(lateFeeInput.value) || 0;
+          const paidVal = parseFloat(paidInput.value) || 0;
+          const remVal = parseFloat(remainingInput.value) || 0;
+          calcFormulaEl.innerHTML = `<span class="text-rose-700 font-bold font-sans">Manual Mode (Auto OFF):</span> Loan ₹${loanVal.toLocaleString()} + Late ₹${lateFeeVal.toLocaleString()} - Paid ₹${paidVal.toLocaleString()} = <span class="text-[#283593] font-bold">₹${remVal.toLocaleString()}</span>`;
+        }
+        return;
+      }
+
       isAutoCalculating = true;
 
       try {
@@ -1314,12 +1468,12 @@
         const loanVal = Math.max(0, parseFloat(loanInput.value) || 0);
         const paidVal = Math.max(0, parseFloat(paidInput.value) || 0);
 
-        // 1. Date synchronization (7-day loan term)
+        // 1. Date synchronization (7-day inclusive loan term: 02-Nov-2026 to 08-Nov-2026 is exactly +6 calendar days)
         if (triggerSource === 'receivedDate' && receivedDateInput.value.trim().length >= 8) {
-          const shifted = shiftAppDate(receivedDateInput.value, 7);
+          const shifted = shiftAppDate(receivedDateInput.value, 6);
           if (shifted) dueDateInput.value = shifted;
         } else if (triggerSource === 'dueDate' && dueDateInput.value.trim().length >= 8) {
-          const shifted = shiftAppDate(dueDateInput.value, -7);
+          const shifted = shiftAppDate(dueDateInput.value, -6);
           if (shifted) receivedDateInput.value = shifted;
         }
 
@@ -1433,6 +1587,7 @@
         amountReceivedDate: document.getElementById('amountReceivedDate').value,
         dueDate: document.getElementById('dueDate').value,
         upiId: document.getElementById('upiId').value,
+        autoCalculate: autoCalculateEnabled,
         visibility: { ...fieldVisibilityState }
       };
 
