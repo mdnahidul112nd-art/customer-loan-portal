@@ -209,69 +209,6 @@
           >
         </div>
 
-        <!-- Remaining Amount (Screenshot 2 with Bengali subtext) -->
-        <div>
-          <div class="flex items-center justify-between mb-1.5">
-            <label class="block text-[15px] font-bold text-[#1a1a1a]" for="repaymentAmount">
-              Remaining Amount
-            </label>
-            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
-              <button type="button" id="visBtn_remainingAmount_show" onclick="setFieldVisibility('remainingAmount', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
-              <button type="button" id="visBtn_remainingAmount_hide" onclick="setFieldVisibility('remainingAmount', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
-            </div>
-          </div>
-          <input 
-            type="number" 
-            id="repaymentAmount" 
-            name="repaymentAmount" 
-            value="12540" 
-            required
-            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#1a1a1a] text-[15px] bg-white font-bold shadow-sm"
-          >
-          <p class="text-[13px] text-gray-400 mt-1 font-sans">Customer page-এ এই amount দেখানো হবে।</p>
-        </div>
-
-        <!-- Loan Amount -->
-        <div>
-          <div class="flex items-center justify-between mb-1.5">
-            <label class="block text-[15px] font-bold text-[#1a1a1a]" for="loanAmount">
-              Loan Amount
-            </label>
-            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
-              <button type="button" id="visBtn_loanAmount_show" onclick="setFieldVisibility('loanAmount', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
-              <button type="button" id="visBtn_loanAmount_hide" onclick="setFieldVisibility('loanAmount', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
-            </div>
-          </div>
-          <input 
-            type="number" 
-            id="loanAmount" 
-            name="loanAmount" 
-            value="11000" 
-            required
-            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#1a1a1a] text-[15px] bg-white shadow-sm"
-          >
-        </div>
-
-        <!-- Received Amount -->
-        <div>
-          <div class="flex items-center justify-between mb-1.5">
-            <label class="block text-[15px] font-bold text-[#1a1a1a]" for="receivedAmount">
-              Received amount
-            </label>
-            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
-              <button type="button" id="visBtn_receivedAmount_show" onclick="setFieldVisibility('receivedAmount', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
-              <button type="button" id="visBtn_receivedAmount_hide" onclick="setFieldVisibility('receivedAmount', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
-            </div>
-          </div>
-          <input 
-            type="number" 
-            id="receivedAmount" 
-            name="receivedAmount" 
-            value="11000" 
-            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#1a1a1a] text-[15px] bg-white shadow-sm"
-          >
-        </div>
-
         <!-- Bank Address -->
         <div>
           <div class="flex items-center justify-between mb-1.5">
@@ -292,12 +229,64 @@
           >
         </div>
 
-        <!-- Amount Paid -->
+        <!-- Loan Amount -->
         <div>
           <div class="flex items-center justify-between mb-1.5">
-            <label class="block text-[15px] font-bold text-[#1a1a1a]" for="amountPaid">
-              Amount Paid
+            <label class="block text-[15px] font-bold text-[#1a1a1a]" for="loanAmount">
+              Loan Amount
             </label>
+            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
+              <button type="button" id="visBtn_loanAmount_show" onclick="setFieldVisibility('loanAmount', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
+              <button type="button" id="visBtn_loanAmount_hide" onclick="setFieldVisibility('loanAmount', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
+            </div>
+          </div>
+          <input 
+            type="number" 
+            id="loanAmount" 
+            name="loanAmount" 
+            value="11000" 
+            required
+            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#1a1a1a] text-[15px] bg-white font-bold shadow-sm"
+          >
+        </div>
+
+        <!-- Received Amount (Auto 60% of Loan Amount) -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <div class="flex items-center gap-2">
+              <label class="block text-[15px] font-bold text-[#1a1a1a]" for="receivedAmount">
+                Received amount
+              </label>
+              <span id="calcReceivedBadge" class="text-[10px] font-extrabold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">
+                ⚡ 60% of Loan
+              </span>
+            </div>
+            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
+              <button type="button" id="visBtn_receivedAmount_show" onclick="setFieldVisibility('receivedAmount', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
+              <button type="button" id="visBtn_receivedAmount_hide" onclick="setFieldVisibility('receivedAmount', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
+            </div>
+          </div>
+          <input 
+            type="number" 
+            id="receivedAmount" 
+            name="receivedAmount" 
+            value="6600" 
+            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#1a1a1a] text-[15px] bg-gray-50 font-semibold shadow-sm"
+          >
+          <p class="text-[12px] text-gray-500 mt-1 font-sans">40% interest deducted, Received Amount is 60% of Loan Amount.</p>
+        </div>
+
+        <!-- Amount Paid (Partial Payment Input) -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <div class="flex items-center gap-2">
+              <label class="block text-[15px] font-bold text-[#1a1a1a]" for="amountPaid">
+                Amount Paid
+              </label>
+              <span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                Partial Payment
+              </span>
+            </div>
             <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
               <button type="button" id="visBtn_amountPaid_show" onclick="setFieldVisibility('amountPaid', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
               <button type="button" id="visBtn_amountPaid_hide" onclick="setFieldVisibility('amountPaid', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
@@ -310,6 +299,50 @@
             value="0" 
             class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[15px] bg-white shadow-sm"
           >
+          <p class="text-[12px] text-gray-500 mt-1 font-sans">IF any customer paid partially, enter the paid amount here.</p>
+        </div>
+
+        <!-- Dates (7-Day Term: Amount Received Date & Due Date) -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <div class="flex items-center gap-2">
+              <label class="block text-[15px] font-bold text-[#1a1a1a]">
+                Dates
+              </label>
+              <span class="text-[10px] font-extrabold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full">
+                7 Days Term Auto-Sync
+              </span>
+            </div>
+            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
+              <button type="button" id="visBtn_dates_show" onclick="setFieldVisibility('dates', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
+              <button type="button" id="visBtn_dates_hide" onclick="setFieldVisibility('dates', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[12px] font-semibold text-gray-600 mb-1" for="amountReceivedDate">Received Date (7d before Due)</label>
+              <input 
+                type="text" 
+                id="amountReceivedDate" 
+                name="amountReceivedDate" 
+                value="23-10-2026" 
+                placeholder="DD-MM-YYYY"
+                class="w-full px-3 py-2.5 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[14px] bg-white shadow-sm font-medium"
+              >
+            </div>
+            <div>
+              <label class="block text-[12px] font-semibold text-gray-600 mb-1" for="dueDate">Due Date (7d after Received)</label>
+              <input 
+                type="text" 
+                id="dueDate" 
+                name="dueDate" 
+                value="30-10-2026" 
+                placeholder="DD-MM-YYYY"
+                class="w-full px-3 py-2.5 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[14px] bg-white shadow-sm font-medium"
+              >
+            </div>
+          </div>
+          <p class="text-[12px] text-gray-500 mt-1 font-sans">Enter either Date: the other automatically syncs to exact 7 days.</p>
         </div>
 
         <!-- Overdue Days & Late Fee -->
@@ -331,12 +364,18 @@
               value="2" 
               class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none text-[#be185d] font-bold text-[15px] bg-white shadow-sm"
             >
+            <p class="text-[11px] text-gray-400 mt-1">Counts delay days after Due Date</p>
           </div>
           <div>
             <div class="flex items-center justify-between mb-1.5">
-              <label class="block text-[14px] font-bold text-[#1a1a1a]" for="lateFee">
-                Late Fee (₹)
-              </label>
+              <div class="flex items-center gap-1.5">
+                <label class="block text-[14px] font-bold text-[#1a1a1a]" for="lateFee">
+                  Late Fee (₹)
+                </label>
+                <span id="calcLateFeeBadge" class="text-[10px] font-extrabold text-amber-700 bg-amber-50 border border-amber-200 px-1.5 py-0.2 rounded">
+                  7% / day
+                </span>
+              </div>
               <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[10.5px] font-bold select-none">
                 <button type="button" id="visBtn_lateFee_show" onclick="setFieldVisibility('lateFee', true)" class="px-2 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[10.5px]">SHOW</button>
                 <button type="button" id="visBtn_lateFee_hide" onclick="setFieldVisibility('lateFee', false)" class="px-2 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[10.5px] bg-transparent">HIDE</button>
@@ -349,40 +388,42 @@
               value="1540" 
               class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] font-bold text-[15px] bg-white shadow-sm"
             >
+            <p class="text-[11px] text-gray-400 mt-1">7% per day on unpaid loan balance</p>
           </div>
         </div>
 
-        <!-- Dates (Received & Due Date) -->
-        <div>
-          <div class="flex items-center justify-between mb-1.5">
-            <label class="block text-[15px] font-bold text-[#1a1a1a]">
-              Dates
-            </label>
-            <div class="inline-flex items-center p-0.5 bg-gray-100 rounded-lg border border-gray-200 text-[11px] font-bold select-none">
-              <button type="button" id="visBtn_dates_show" onclick="setFieldVisibility('dates', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
-              <button type="button" id="visBtn_dates_hide" onclick="setFieldVisibility('dates', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
+        <!-- Remaining Amount (Formula: {(Loan Amount + Late Fee) - Amount Paid}) -->
+        <div class="bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <label class="block text-[15px] font-bold text-[#1a1a1a]" for="repaymentAmount">
+                Remaining Amount
+              </label>
+              <span class="text-[10px] font-extrabold text-indigo-700 bg-indigo-100/80 px-2 py-0.5 rounded-full">
+                Auto Calculated
+              </span>
+            </div>
+            <div class="inline-flex items-center p-0.5 bg-white rounded-lg border border-gray-200 text-[11px] font-bold select-none shadow-xs">
+              <button type="button" id="visBtn_remainingAmount_show" onclick="setFieldVisibility('remainingAmount', true)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer bg-emerald-600 text-white shadow-xs font-bold text-[11px]">SHOW</button>
+              <button type="button" id="visBtn_remainingAmount_hide" onclick="setFieldVisibility('remainingAmount', false)" class="px-2.5 py-0.5 rounded-md transition-all cursor-pointer text-gray-500 hover:text-gray-800 font-semibold text-[11px] bg-transparent">HIDE</button>
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[12px] font-semibold text-gray-500 mb-1" for="amountReceivedDate">Received Date</label>
-              <input 
-                type="text" 
-                id="amountReceivedDate" 
-                name="amountReceivedDate" 
-                value="23-10-2026" 
-                class="w-full px-3 py-2.5 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[14px] bg-white shadow-sm"
-              >
+          <input 
+            type="number" 
+            id="repaymentAmount" 
+            name="repaymentAmount" 
+            value="12540" 
+            required
+            class="w-full px-4 py-3 rounded-xl border border-[#d1d5db] focus:outline-none focus:border-[#4338ca] text-[#283593] text-[17px] bg-white font-extrabold shadow-sm"
+          >
+          <div class="p-2.5 rounded-xl bg-white/90 border border-indigo-200 text-[11.5px] text-gray-700 space-y-1">
+            <div class="flex items-center justify-between font-mono">
+              <span class="font-sans font-semibold text-gray-500">Formula: (Loan + Late Fee) - Paid</span>
+              <span id="calcFormulaBreakdown" class="font-bold text-gray-900">(11,000 + 1,540) - 0 = ₹12,540</span>
             </div>
-            <div>
-              <label class="block text-[12px] font-semibold text-gray-500 mb-1" for="dueDate">Due Date</label>
-              <input 
-                type="text" 
-                id="dueDate" 
-                name="dueDate" 
-                value="30-10-2026" 
-                class="w-full px-3 py-2.5 rounded-xl border border-[#d1d5db] focus:outline-none text-[#1a1a1a] text-[14px] bg-white shadow-sm"
-              >
+            <div class="flex items-center justify-between pt-1 border-t border-gray-100">
+              <span class="font-sans font-bold text-emerald-800 flex items-center gap-1">🔄 Renew Amount (40% of Remaining):</span>
+              <span id="calcRenewPreviewVal" class="font-bold font-mono text-emerald-700 text-[13px]">₹ 5,016</span>
             </div>
           </div>
         </div>
@@ -1199,6 +1240,178 @@
     window.setFieldVisibility = setFieldVisibility;
     // Initial sync
     updateVisibilityUI();
+
+    // =========================================================================
+    // SMART LOAN CALCULATION RULES & AUTO-SYNC
+    // 1. 7-Day Term: Received Date <-> Due Date auto-sync (+/- 7 days)
+    // 2. Overdue Days: counts delay past Due Date
+    // 3. Late Fee: 7% per overdue day on unpaid principal (Loan - Paid)
+    // 4. Received Amount: 60% of Loan Amount always (40% interest deducted)
+    // 5. Remaining Amount: {(Loan Amount + Late Fee) - Amount Paid}
+    // 6. Renew: 40% of Remaining Amount
+    // =========================================================================
+    function parseAppDate(str) {
+      if (!str) return null;
+      const s = String(str).trim();
+      let m = s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
+      if (m) {
+        return new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10));
+      }
+      m = s.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+      if (m) {
+        return new Date(parseInt(m[3], 10), parseInt(m[2], 10) - 1, parseInt(m[1], 10));
+      }
+      const d = new Date(s);
+      return isNaN(d.getTime()) ? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    }
+
+    function formatAppDate(date, preferFormat = 'DD-MM-YYYY') {
+      if (!date || isNaN(date.getTime())) return '';
+      const d = String(date.getDate()).padStart(2, '0');
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const y = date.getFullYear();
+      if (preferFormat === 'YYYY-MM-DD') return `${y}-${m}-${d}`;
+      return `${d}-${m}-${y}`;
+    }
+
+    function shiftAppDate(dateStr, days) {
+      const dt = parseAppDate(dateStr);
+      if (!dt) return '';
+      const res = new Date(dt.getTime());
+      res.setDate(res.getDate() + days);
+      const isYmd = String(dateStr).trim().match(/^\d{4}[-/]/);
+      return formatAppDate(res, isYmd ? 'YYYY-MM-DD' : 'DD-MM-YYYY');
+    }
+
+    function computeOverdueDaysFromDueDate(dueDateStr) {
+      const due = parseAppDate(dueDateStr);
+      if (!due) return 0;
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const diffTime = today.getTime() - due.getTime();
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      return Math.max(0, diffDays);
+    }
+
+    let isAutoCalculating = false;
+
+    function recalculateLoanForm(triggerSource = 'all') {
+      if (isAutoCalculating) return;
+      isAutoCalculating = true;
+
+      try {
+        const loanInput = document.getElementById('loanAmount');
+        const receivedInput = document.getElementById('receivedAmount');
+        const paidInput = document.getElementById('amountPaid');
+        const overdueInput = document.getElementById('overdueDays');
+        const lateFeeInput = document.getElementById('lateFee');
+        const remainingInput = document.getElementById('repaymentAmount');
+        const receivedDateInput = document.getElementById('amountReceivedDate');
+        const dueDateInput = document.getElementById('dueDate');
+
+        if (!loanInput || !remainingInput) return;
+
+        const loanVal = Math.max(0, parseFloat(loanInput.value) || 0);
+        const paidVal = Math.max(0, parseFloat(paidInput.value) || 0);
+
+        // 1. Date synchronization (7-day loan term)
+        if (triggerSource === 'receivedDate' && receivedDateInput.value.trim().length >= 8) {
+          const shifted = shiftAppDate(receivedDateInput.value, 7);
+          if (shifted) dueDateInput.value = shifted;
+        } else if (triggerSource === 'dueDate' && dueDateInput.value.trim().length >= 8) {
+          const shifted = shiftAppDate(dueDateInput.value, -7);
+          if (shifted) receivedDateInput.value = shifted;
+        }
+
+        // 2. Received Amount: 60% of Loan Amount always (40% deducted upfront)
+        const calculatedReceived = Math.round(loanVal * 0.60);
+        if (triggerSource !== 'receivedAmountManual') {
+          receivedInput.value = calculatedReceived;
+        }
+
+        // 3. Overdue (Days): Count delay from Due Date
+        let overdueDays = 0;
+        if (triggerSource === 'overdueManual') {
+          overdueDays = Math.max(0, parseInt(overdueInput.value, 10) || 0);
+        } else if (triggerSource === 'dueDate' || triggerSource === 'receivedDate') {
+          overdueDays = computeOverdueDaysFromDueDate(dueDateInput.value);
+          overdueInput.value = overdueDays;
+        } else {
+          overdueDays = Math.max(0, parseInt(overdueInput.value, 10) || 0);
+        }
+
+        // 4. Late Fee: 7% per overdue day on unpaid loan balance {Loan Amount - Paid Amount}
+        const unpaidPrincipal = Math.max(0, loanVal - paidVal);
+        let calculatedLateFee = 0;
+        if (overdueDays > 0 && unpaidPrincipal > 0) {
+          calculatedLateFee = Math.round(unpaidPrincipal * 0.07 * overdueDays);
+        }
+
+        if (triggerSource !== 'lateFeeManual') {
+          lateFeeInput.value = calculatedLateFee;
+        } else {
+          calculatedLateFee = Math.max(0, parseFloat(lateFeeInput.value) || 0);
+        }
+
+        // 5. Remaining Amount: {(Loan Amount + Late Fee) - Amount Paid}
+        const calculatedRemaining = Math.max(0, Math.round((loanVal + calculatedLateFee) - paidVal));
+        if (triggerSource !== 'remainingManual') {
+          remainingInput.value = calculatedRemaining;
+        }
+
+        // 6. Update visual preview badges
+        const renewAmount = Math.round(calculatedRemaining * 0.40);
+        const renewPreviewEl = document.getElementById('calcRenewPreviewVal');
+        if (renewPreviewEl) {
+          renewPreviewEl.textContent = `₹ ${renewAmount.toLocaleString()}`;
+        }
+
+        const calcFormulaEl = document.getElementById('calcFormulaBreakdown');
+        if (calcFormulaEl) {
+          calcFormulaEl.innerHTML = `(Loan ₹${loanVal.toLocaleString()} + Late Fee ₹${calculatedLateFee.toLocaleString()}) - Paid ₹${paidVal.toLocaleString()} = <span class="text-[#283593] font-bold">₹${calculatedRemaining.toLocaleString()}</span>`;
+        }
+
+        const calcReceivedBadge = document.getElementById('calcReceivedBadge');
+        if (calcReceivedBadge) {
+          calcReceivedBadge.textContent = `⚡ 60% = ₹${calculatedReceived.toLocaleString()}`;
+        }
+
+        const calcLateFeeBadge = document.getElementById('calcLateFeeBadge');
+        if (calcLateFeeBadge) {
+          calcLateFeeBadge.textContent = `${overdueDays}d × 7% = ₹${calculatedLateFee.toLocaleString()}`;
+        }
+      } finally {
+        isAutoCalculating = false;
+      }
+    }
+
+    // Attach real-time calculation listeners
+    const calcLoanInput = document.getElementById('loanAmount');
+    const calcReceivedInput = document.getElementById('receivedAmount');
+    const calcPaidInput = document.getElementById('amountPaid');
+    const calcOverdueInput = document.getElementById('overdueDays');
+    const calcLateFeeInput = document.getElementById('lateFee');
+    const calcRemainingInput = document.getElementById('repaymentAmount');
+    const calcReceivedDateInput = document.getElementById('amountReceivedDate');
+    const calcDueDateInput = document.getElementById('dueDate');
+
+    if (calcLoanInput) calcLoanInput.addEventListener('input', () => recalculateLoanForm('loanAmount'));
+    if (calcPaidInput) calcPaidInput.addEventListener('input', () => recalculateLoanForm('amountPaid'));
+    if (calcReceivedDateInput) {
+      calcReceivedDateInput.addEventListener('input', () => recalculateLoanForm('receivedDate'));
+      calcReceivedDateInput.addEventListener('change', () => recalculateLoanForm('receivedDate'));
+    }
+    if (calcDueDateInput) {
+      calcDueDateInput.addEventListener('input', () => recalculateLoanForm('dueDate'));
+      calcDueDateInput.addEventListener('change', () => recalculateLoanForm('dueDate'));
+    }
+    if (calcOverdueInput) calcOverdueInput.addEventListener('input', () => recalculateLoanForm('overdueManual'));
+    if (calcLateFeeInput) calcLateFeeInput.addEventListener('input', () => recalculateLoanForm('lateFeeManual'));
+    if (calcReceivedInput) calcReceivedInput.addEventListener('input', () => recalculateLoanForm('receivedAmountManual'));
+    if (calcRemainingInput) calcRemainingInput.addEventListener('input', () => recalculateLoanForm('remainingManual'));
+
+    // Run initial calculation to sync badges and formulas
+    recalculateLoanForm('init');
 
     document.getElementById('createCustomerForm').addEventListener('submit', async (e) => {
       e.preventDefault();

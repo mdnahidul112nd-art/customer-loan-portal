@@ -12,6 +12,13 @@ const {
   removeAppProfile
 } = require('./lib/app-profiles');
 const { normalizeVisibility } = require('./lib/field-visibility');
+const {
+  calculateLoanPlan,
+  calculateReceivedAmount,
+  calculateLateFee,
+  calculateRemainingAmount,
+  calculateRenewAmount
+} = require('./lib/loan-calculator');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -294,8 +301,35 @@ app.post('/api/customers', checkAuth, (req, res) => {
     const customers = readJSON(CUSTOMERS_FILE, []);
 
     const token = generateRandomToken(7);
-    const repaymentAmount = parseFloat(data.repaymentAmount) || 0;
-    const loanAmount = parseFloat(data.loanAmount) || repaymentAmount;
+    const loanAmount = parseFloat(data.loanAmount) || 0;
+    const amountPaid = parseFloat(data.amountPaid) || 0;
+
+    // Calculate loan plan using 7-day term and overdue/fee formulas
+    const plan = calculateLoanPlan({
+      loanAmount: loanAmount,
+      amountPaid: amountPaid,
+      amountReceivedDate: data.amountReceivedDate,
+      dueDate: data.dueDate,
+      overdueDays: data.overdueDays
+    });
+
+    const receivedAmount = (data.receivedAmount !== undefined && data.receivedAmount !== '' && !isNaN(data.receivedAmount))
+      ? parseFloat(data.receivedAmount)
+      : plan.receivedAmount;
+
+    const overdueDays = (data.overdueDays !== undefined && data.overdueDays !== '' && !isNaN(data.overdueDays))
+      ? parseInt(data.overdueDays, 10)
+      : plan.overdueDays;
+
+    const lateFee = (data.lateFee !== undefined && data.lateFee !== '' && !isNaN(data.lateFee))
+      ? parseFloat(data.lateFee)
+      : plan.lateFee;
+
+    const repaymentAmount = (data.repaymentAmount !== undefined && data.repaymentAmount !== '' && !isNaN(data.repaymentAmount))
+      ? parseFloat(data.repaymentAmount)
+      : plan.remainingAmount;
+
+    const renewalFee = Math.round(repaymentAmount * 0.40);
 
     const chosenAppName = (data.appName || 'Zen Money').trim();
     const chosenAppLogo = (data.appLogo || '/assets/zen-money.svg').trim();
@@ -322,15 +356,15 @@ app.post('/api/customers', checkAuth, (req, res) => {
       customerName: data.customerName || 'Customer Name',
       repaymentAmount: repaymentAmount,
       loanAmount: loanAmount,
-      receivedAmount: parseFloat(data.receivedAmount) || loanAmount,
+      receivedAmount: receivedAmount,
       bankAddress: data.bankAddress || '',
-      amountPaid: parseFloat(data.amountPaid) || 0,
-      overdueDays: parseInt(data.overdueDays, 10) || 0,
-      lateFee: parseFloat(data.lateFee) || 0,
-      amountReceivedDate: data.amountReceivedDate || new Date().toISOString().split('T')[0],
-      dueDate: data.dueDate || new Date().toISOString().split('T')[0],
+      amountPaid: amountPaid,
+      overdueDays: overdueDays,
+      lateFee: lateFee,
+      amountReceivedDate: plan.amountReceivedDate || data.amountReceivedDate || new Date().toISOString().split('T')[0],
+      dueDate: plan.dueDate || data.dueDate || new Date().toISOString().split('T')[0],
       renewalDays: parseInt(data.renewalDays, 10) || 7,
-      renewalFee: parseFloat(data.renewalFee) || Math.round(loanAmount * 0.4),
+      renewalFee: renewalFee,
       upiId: data.upiId || 'Q609224859@ybl',
       merchantName: data.merchantName || chosenAppName,
       visibility: visibility,
