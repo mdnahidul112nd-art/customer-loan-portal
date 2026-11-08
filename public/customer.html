@@ -320,22 +320,22 @@
       </div>
 
       <!-- ── PURPLE TIMER BAR ─────────────────────────────────────────────────── -->
-      <!-- Deep purple #4a157c, clock icon, "05 : 37" spaced, Interactive Language selector button -->
+      <!-- Deep purple #4a157c, clock icon, "10 : 00" remaining 10 minutes, English default language -->
       <div style="background:#4a157c;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;">
         <div style="display:flex;align-items:center;gap:8px;">
           <svg width="18" height="18" fill="none" stroke="#e2b8ff" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10"/>
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l3.5 2"/>
           </svg>
-          <span id="countdownTimer" style="color:#ffffff;font-size:16px;font-weight:700;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:2.5px;">05 : 37</span>
+          <span id="countdownTimer" style="color:#ffffff;font-size:16px;font-weight:700;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:2.5px;">10 : 00</span>
         </div>
         <!-- Language selector button -->
         <button id="languageSelectorBtn" type="button"
           style="background:transparent;border:1.6px solid #d4aaff;color:#e8d5ff;border-radius:999px;padding:3px 12px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:'Segoe UI',Roboto,sans-serif;letter-spacing:0.3px;display:inline-flex;align-items:center;gap:5px;transition:all 0.15s ease;"
           onmouseover="this.style.background='rgba(255,255,255,0.1)'"
           onmouseout="this.style.background='transparent'"
-          title="Select Language / भाषा चुनें">
-          <span id="currentLangLabel">हिंदी</span>
+          title="Select Language / ভাষা নির্বাচন করুন">
+          <span id="currentLangLabel">English</span>
           <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 9l6 6 6-6"/>
           </svg>
@@ -868,6 +868,10 @@
     async function setupGateway() {
       if (!currentCustomer) return;
 
+      // Always start/reset timer to remaining 10 minutes (10:00) when gateway opens
+      resetAndStartGatewayTimer();
+      applyLanguage(currentLang);
+
       const amt = Number(selectedAmountToPay || currentCustomer.repaymentAmount).toFixed(2);
       document.getElementById('gatewayAmountDisplay').innerText = `₹ ${amt}`;
 
@@ -1196,14 +1200,16 @@
       }
     };
 
-    let currentLang = localStorage.getItem('portal_lang') || 'hi';
+    // Default language is English always
+    let currentLang = localStorage.getItem('portal_lang') || 'en';
+    if (!LANGUAGES[currentLang]) currentLang = 'en';
 
     function getT() {
-      return LANGUAGES[currentLang] || LANGUAGES.hi;
+      return LANGUAGES[currentLang] || LANGUAGES.en;
     }
 
     function applyLanguage(code) {
-      if (!LANGUAGES[code]) code = 'hi';
+      if (!LANGUAGES[code]) code = 'en';
       currentLang = code;
       localStorage.setItem('portal_lang', code);
       const t = getT();
@@ -1505,21 +1511,37 @@
       }
     });
 
-    let totalSeconds = 5 * 60 + 37;
-    function startTimer() {
+    // ━━━━ COUNTDOWN TIMER: ALWAYS STARTS FROM 10 MINUTES (10:00) ━━━━
+    let gatewayTimerInterval = null;
+    let totalGatewaySeconds = 10 * 60; // 10 minutes = 600s
+
+    function updateTimerDisplay(seconds) {
       const timerEl = document.getElementById('countdownTimer');
-      setInterval(() => {
-        if (totalSeconds > 0) {
-          totalSeconds--;
-          const m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
-          const s = (totalSeconds % 60).toString().padStart(2, '0');
-          timerEl.innerText = `${m} : ${s}`;
+      if (!timerEl) return;
+      const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+      const s = (seconds % 60).toString().padStart(2, '0');
+      timerEl.innerText = `${m} : ${s}`;
+    }
+
+    function resetAndStartGatewayTimer() {
+      if (gatewayTimerInterval) clearInterval(gatewayTimerInterval);
+      totalGatewaySeconds = 10 * 60;
+      updateTimerDisplay(totalGatewaySeconds);
+
+      gatewayTimerInterval = setInterval(() => {
+        if (totalGatewaySeconds > 0) {
+          totalGatewaySeconds--;
+          updateTimerDisplay(totalGatewaySeconds);
+        } else {
+          clearInterval(gatewayTimerInterval);
         }
       }, 1000);
     }
-    startTimer();
 
-    // Initialize Language
+    // Set initial timer display to 10:00
+    updateTimerDisplay(10 * 60);
+
+    // Initialize Default Language (English)
     applyLanguage(currentLang);
 
     fetchCustomer();
