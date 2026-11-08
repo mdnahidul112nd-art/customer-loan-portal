@@ -37,6 +37,20 @@
       60% { transform: scale(1.08); }
       100% { transform: scale(1); opacity: 1; }
     }
+    @keyframes pulseRedDot {
+      0% {
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.85);
+      }
+      70% {
+        transform: scale(1.2);
+        box-shadow: 0 0 0 9px rgba(239, 68, 68, 0);
+      }
+      100% {
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+      }
+    }
   </style>
 </head>
 <body class="min-h-screen flex justify-center bg-[#f2f3f5]">
@@ -488,27 +502,27 @@
   <div id="utrSuccessModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background:rgba(15,23,42,0.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);">
     <div style="background:#ffffff;border-radius:28px;width:92%;max-width:340px;padding:32px 24px 28px;text-align:center;box-shadow:0 25px 60px -12px rgba(0,0,0,0.35);transition:all 0.2s ease;">
       
-      <!-- Modal Icon: Spinner while checking, status icons on admin result -->
-      <div id="utrIconContainer" style="margin:0 auto 20px;display:flex;justify-content:center;align-items:center;">
-        <!-- Loading spinner state (continues spinning during review) -->
-        <div id="utrLoadingSpinner" style="width:72px;height:72px;border-radius:50%;border:4.5px solid #f3e8ff;border-top-color:#6b21a8;border-right-color:#9333ea;animation:spin 0.75s linear infinite;"></div>
+      <!-- Modal Icon: Only ONE single icon is shown at any time -->
+      <div id="utrIconContainer" style="margin:0 auto 20px;display:flex;justify-content:center;align-items:center;min-height:76px;">
+        <!-- Loading spinner state (the ONLY icon shown during checking) -->
+        <div id="utrLoadingSpinner" style="display:inline-block;width:72px;height:72px;border-radius:50%;border:5px solid #f3e8ff;border-top-color:#6b21a8;border-right-color:#9333ea;animation:spin 0.75s linear infinite;"></div>
         
-        <!-- Payment Success checkmark state -->
-        <div id="utrCheckmarkIcon" class="hidden" style="width:72px;height:72px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(22,163,74,0.18);animation:pulseCheck 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">
+        <!-- Payment Success checkmark state (hidden by default) -->
+        <div id="utrCheckmarkIcon" style="display:none;width:72px;height:72px;border-radius:50%;background:#dcfce7;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(22,163,74,0.22);animation:pulseCheck 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">
           <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 6L9 17l-5-5"/>
           </svg>
         </div>
 
-        <!-- Payment Failed icon state -->
-        <div id="utrFailedIcon" class="hidden" style="width:72px;height:72px;border-radius:50%;background:#fee2e2;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(220,38,38,0.18);animation:pulseCheck 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">
+        <!-- Payment Failed icon state (hidden by default) -->
+        <div id="utrFailedIcon" style="display:none;width:72px;height:72px;border-radius:50%;background:#fee2e2;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(220,38,38,0.22);animation:pulseCheck 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">
           <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M18 6L6 18M6 6l12 12"/>
           </svg>
         </div>
 
-        <!-- UTR Warning / Mismatch icon state -->
-        <div id="utrWarningIcon" class="hidden" style="width:72px;height:72px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(217,119,6,0.18);animation:pulseCheck 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">
+        <!-- UTR Warning / Mismatch icon state (hidden by default) -->
+        <div id="utrWarningIcon" style="display:none;width:72px;height:72px;border-radius:50%;background:#fef3c7;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(217,119,6,0.22);animation:pulseCheck 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">
           <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
             <line x1="12" y1="9" x2="12" y2="13"/>
@@ -516,8 +530,8 @@
           </svg>
         </div>
 
-        <!-- Bank Mismatch icon state -->
-        <div id="utrBankIcon" class="hidden" style="width:72px;height:72px;border-radius:50%;background:#ffedd5;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(234,88,12,0.18);animation:pulseCheck 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">
+        <!-- Bank Mismatch icon state (hidden by default) -->
+        <div id="utrBankIcon" style="display:none;width:72px;height:72px;border-radius:50%;background:#ffedd5;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(234,88,12,0.22);animation:pulseCheck 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">
           <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M14 10v11M12 3L2 10h20L12 3z"/>
           </svg>
@@ -534,10 +548,12 @@
         Connecting to bank server to verify transaction details, please wait...
       </p>
 
-      <!-- Live checking indicator badge (shown during checking; Done button is removed) -->
-      <div id="utrCheckingBadge" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:999px;color:#5b21b6;font-size:13px;font-weight:700;font-family:-apple-system,sans-serif;">
-        <span style="display:inline-block;width:9px;height:9px;background:#7c3aed;border-radius:50%;animation:pulseCheck 1s infinite alternate;"></span>
-        <span id="checkingBadgeText">Payment under Checking, please wait...</span>
+      <!-- Highly Highlighted Red Live Badge with Red Dot and Red Text -->
+      <div id="utrCheckingBadge" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 18px;background:linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);border:2px solid #ef4444;border-radius:999px;box-shadow:0 6px 20px rgba(239,68,68,0.24);margin-top:12px;">
+        <!-- Pulsing Red Dot -->
+        <span style="display:inline-block;width:11px;height:11px;background:#ef4444;border-radius:50%;animation:pulseRedDot 1.2s infinite ease-in-out;flex-shrink:0;"></span>
+        <!-- Red High-Contrast Text -->
+        <span id="checkingBadgeText" style="color:#dc2626;font-size:13.5px;font-weight:800;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:-0.2px;">Payment under Checking, please wait...</span>
       </div>
 
       <!-- Action Button (only shown for completed outcomes: Success, Failed, Mismatch) -->
@@ -1228,35 +1244,35 @@
       const checkingBadge = document.getElementById('utrCheckingBadge');
       const actionBtn = document.getElementById('utrActionBtn');
 
-      // Reset all icon states
-      spinner.classList.add('hidden');
-      checkmark.classList.add('hidden');
-      if (failedIcon) failedIcon.classList.add('hidden');
-      if (warningIcon) warningIcon.classList.add('hidden');
-      if (bankIcon) bankIcon.classList.add('hidden');
+      // Explicitly hide all icons using direct inline style to ensure strictly ONE single icon shows
+      spinner.style.display = 'none';
+      checkmark.style.display = 'none';
+      if (failedIcon) failedIcon.style.display = 'none';
+      if (warningIcon) warningIcon.style.display = 'none';
+      if (bankIcon) bankIcon.style.display = 'none';
 
       const formattedAmount = cust ? Number(cust.repaymentAmount).toLocaleString() : '12,540';
       const displayUtr = utr || cust?.submittedUtr || '889308889660';
 
       if (status === 'Payment Success') {
-        checkmark.classList.remove('hidden');
+        checkmark.style.display = 'flex';
         titleEl.innerText = 'Payment Successful!';
         titleEl.style.color = '#15803d';
         bodyEl.innerHTML = `Your payment of <strong style="color:#15803d;font-size:16px;">₹ ${formattedAmount}</strong> (UTR: <strong style="font-family:monospace;color:#111827;">${displayUtr}</strong>) has been verified and confirmed successfully.`;
-        checkingBadge.classList.add('hidden');
-        actionBtn.classList.remove('hidden');
+        checkingBadge.style.display = 'none';
+        actionBtn.style.display = 'block';
         actionBtn.innerText = 'Payment Complete ✓';
         actionBtn.style.background = '#16a34a';
         actionBtn.onclick = () => {
           modal.classList.add('hidden');
         };
       } else if (status === 'Payment Failed') {
-        if (failedIcon) failedIcon.classList.remove('hidden');
+        if (failedIcon) failedIcon.style.display = 'flex';
         titleEl.innerText = 'Payment Failed';
         titleEl.style.color = '#dc2626';
         bodyEl.innerHTML = `Your payment verification could not be completed. ${cust?.statusNote || 'Please check your bank transaction or re-enter your UTR to try again.'}`;
-        checkingBadge.classList.add('hidden');
-        actionBtn.classList.remove('hidden');
+        checkingBadge.style.display = 'none';
+        actionBtn.style.display = 'block';
         actionBtn.innerText = 'Try Again / Re-enter UTR';
         actionBtn.style.background = '#dc2626';
         actionBtn.onclick = () => {
@@ -1268,12 +1284,12 @@
           }
         };
       } else if (status === 'UTR Not Matched') {
-        if (warningIcon) warningIcon.classList.remove('hidden');
+        if (warningIcon) warningIcon.style.display = 'flex';
         titleEl.innerText = 'UTR Not Matched';
         titleEl.style.color = '#b45309';
         bodyEl.innerHTML = `The 12-digit UTR (<strong style="font-family:monospace;color:#111827;">${displayUtr}</strong>) does not match our bank payment records. Please re-check your UPI receipt and enter the correct 12-digit UTR.`;
-        checkingBadge.classList.add('hidden');
-        actionBtn.classList.remove('hidden');
+        checkingBadge.style.display = 'none';
+        actionBtn.style.display = 'block';
         actionBtn.innerText = 'Re-enter Correct UTR';
         actionBtn.style.background = '#d97706';
         actionBtn.onclick = () => {
@@ -1285,12 +1301,12 @@
           }
         };
       } else if (status === 'Bank Not Matched') {
-        if (bankIcon) bankIcon.classList.remove('hidden');
+        if (bankIcon) bankIcon.style.display = 'flex';
         titleEl.innerText = 'Bank Not Matched';
         titleEl.style.color = '#c2410c';
         bodyEl.innerHTML = `The sender bank account or details do not match the registered borrower profile. Please make sure payment was sent from your registered account.`;
-        checkingBadge.classList.add('hidden');
-        actionBtn.classList.remove('hidden');
+        checkingBadge.style.display = 'none';
+        actionBtn.style.display = 'block';
         actionBtn.innerText = 'Re-enter UTR / Try Again';
         actionBtn.style.background = '#ea580c';
         actionBtn.onclick = () => {
@@ -1302,16 +1318,13 @@
           }
         };
       } else {
-        // Checking / UTR Submitted
-        // Exact user requirement: SPINNER CONTINUES SPINNING! Green right/check icon removed!
-        // Details show: Your 12-digit UTR [utr] has been Submitted and now Payment under Checking...
-        // Done option is REMOVED!
-        spinner.classList.remove('hidden');
+        // Checking / In Review: ONLY ONE SINGLE ICON - The spinner spinning continuously!
+        spinner.style.display = 'inline-block';
         titleEl.innerText = 'UTR Submitted!';
         titleEl.style.color = '#111827';
         bodyEl.innerHTML = `Your 12-digit UTR <strong style="color:#111827;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:15px;font-weight:700;">${displayUtr}</strong> has been Submitted and now Payment under Checking, please wait while to get results ..`;
-        checkingBadge.classList.remove('hidden');
-        actionBtn.classList.add('hidden'); // Done button removed!
+        checkingBadge.style.display = 'flex';
+        actionBtn.style.display = 'none'; // Done button completely removed!
       }
     }
 
