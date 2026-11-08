@@ -1,0 +1,6 @@
+{
+  "name": "Customer Loan Portal",
+  "description": "Customer Loan Portal & Admin Dashboard with UPI payment flow and UTR tracking.",
+  "permissions": [],
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

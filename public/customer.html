@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Repay</title>
+  <!-- Google Fonts: Playfair Display & Lora -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Exact Typography from the original screenshots */
+    .font-serif-app {
+      font-family: 'Playfair Display', Georgia, 'Times New Roman', Times, serif;
+    }
+    .font-sans-app {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body {
+      background-color: #f2f3f5;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Toast animation */
+    #toast {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex justify-center bg-[#f2f3f5]">
+
+  <!-- Mobile Container: 100% Width on Mobile, 420px Centered on PC -->
+  <div class="w-full max-w-[420px] min-h-screen bg-[#f2f3f5] flex flex-col relative shadow-sm">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden opacity-0 transition-all bg-[#1e2530] text-white text-[13px] px-4 py-2.5 rounded-full shadow-2xl font-bold flex items-center space-x-2 font-sans-app">
+      <span id="toastIcon">📋</span>
+      <span id="toastMsg">Copied!</span>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 1: REPAY (SCREENSHOT 3: EXACT PIXEL-PERFECT REPLICA) -->
+    <!-- ========================================================================= -->
+    <div id="viewRepay" class="flex-1 flex flex-col justify-between pb-28 hidden">
+      
+      <!-- Top Bar (Exact Screenshot: White bar, Black arrow, Centered Serif Title) -->
+      <div class="bg-white px-4 py-3 flex items-center justify-between sticky top-0 z-20">
+        <button onclick="window.history.back()" class="text-black p-1 focus:outline-none" title="Back">
+          <svg class="w-5 h-5 stroke-[2.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <h1 class="text-[19px] font-bold text-black font-serif-app tracking-wide">Repay</h1>
+        <div class="w-5"></div>
+      </div>
+
+      <div class="space-y-3.5 pt-3">
+        
+        <!-- App Branding: Icon + App Name (Screenshot 3) -->
+        <div class="flex items-center space-x-3 px-4">
+          <div class="w-[46px] h-[46px] rounded-2xl overflow-hidden shadow-sm flex-shrink-0 bg-white border border-gray-100 flex items-center justify-center">
+            <img id="mainAppLogo" src="/assets/zen-money.svg" alt="App Logo" class="w-full h-full object-cover">
+          </div>
+          <h2 id="mainAppName" class="text-[21px] font-bold text-[#111827] font-serif-app">Zen Money</h2>
+        </div>
+
+        <!-- Main Details Card (Screenshot 3: White Card with Rounded Corners) -->
+        <div class="mx-3.5 bg-white rounded-2xl px-5 py-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-gray-100/80">
+          
+          <!-- Repayment Amount Header -->
+          <div class="text-center pb-3">
+            <p class="text-[#6b7280] text-[14px] font-serif-app">Repayment Amount</p>
+            <h3 id="mainRepaymentAmount" class="text-[34px] font-bold text-[#283593] font-serif-app tracking-tight mt-0.5">
+              ₹ 12,540
+            </h3>
+          </div>
+
+          <!-- Rows List (Screenshot 3: Crisp Sans-Serif Table) -->
+          <div class="pt-3 space-y-3 text-[13.5px] font-sans-app">
+            <div class="flex justify-between items-start">
+              <span class="text-[#9ca3af]">Name</span>
+              <span id="custNameVal" class="text-[#1f2937] font-semibold text-right max-w-[210px] truncate uppercase">BHAVIK KAMLES...</span>
+            </div>
+
+            <div class="flex justify-between items-start">
+              <span class="text-[#9ca3af]">Bank Address</span>
+              <span id="bankAddressVal" class="text-[#374151] text-right max-w-[220px] truncate text-[12.5px]">HDFC BANK, ANDHERI (W), MU...</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <span class="text-[#9ca3af]">Received amount</span>
+              <span id="receivedAmountVal" class="text-[#1f2937] font-semibold">₹ 11,000</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <span class="text-[#9ca3af]">Loan Amount</span>
+              <span id="loanAmountVal" class="text-[#1f2937] font-semibold">₹ 11,000</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <span class="text-[#9ca3af]">Amount Paid</span>
+              <span id="amountPaidVal" class="text-[#1f2937] font-semibold">₹ 0</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <span class="text-[#9ca3af]">Over Due</span>
+              <span id="overdueDaysVal" class="text-[#be185d] font-bold">2 Days</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <span class="text-[#9ca3af]">Late Fee</span>
+              <span id="lateFeeVal" class="text-[#1f2937] font-semibold">₹ 1,540</span>
+            </div>
+
+            <!-- Dashed Divider Line (Exact Screenshot 3) -->
+            <div class="border-t border-dashed border-gray-200 my-2.5"></div>
+
+            <div class="flex justify-between items-center">
+              <span class="text-[#9ca3af]">Amount Received Date</span>
+              <span id="receivedDateVal" class="text-[#4b5563] font-semibold">23-10-2026</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <span class="text-[#9ca3af]">Due Date</span>
+              <span id="dueDateVal" class="text-[#4b5563] font-semibold">30-10-2026</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tips Section (Exact Screenshot 3: Serif font, Red bold highlights) -->
+        <div class="px-5 pt-1 space-y-2 text-[14px] leading-relaxed text-[#111827] font-serif-app">
+          <h4 class="font-bold text-[15px] text-[#111827]">Tips:</h4>
+          
+          <p>
+            <span class="text-[#e02424] font-bold">! ! ! &nbsp;One UPI</span> can only transfer money <span class="text-[#e02424] font-bold">ONCE.</span>
+          </p>
+          
+          <p>
+            <span class="text-[#e02424] font-bold">! ! ! &nbsp;DO NOT CHANGE</span> the payment <span class="text-[#e02424] font-bold">AMOUNT & UPI.</span>
+          </p>
+
+          <p>
+            <span class="text-[#e02424] font-bold">! ! ! &nbsp;DO NOT</span> transfer money in the <span class="text-[#e02424] font-bold">UPI</span> friend <span class="text-[#e02424] font-bold">CHAT</span> window again.
+          </p>
+
+          <p>
+            Otherwise, the order <span class="text-[#e02424] font-bold">CANNOT be completed.</span>
+          </p>
+
+          <p>
+            After payment is completed, please <span class="text-[#e02424] font-bold">fill in the UTR.</span>
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Sticky Bottom Action Bar (Screenshot 3: White card, Rounded Top, Renew & Repay buttons) -->
+      <div class="fixed bottom-0 left-0 right-0 max-w-[420px] mx-auto bg-white px-5 py-3.5 flex items-center justify-between space-x-3.5 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] rounded-t-[26px] z-30">
+        <!-- Renew Button -->
+        <button 
+          id="goToRenewBtn"
+          class="w-1/2 py-3 px-4 rounded-full border-2 border-[#283593] bg-white text-[#283593] font-bold text-[17px] hover:bg-blue-50 transition-all active:scale-95 text-center font-serif-app shadow-sm"
+        >
+          Renew
+        </button>
+
+        <!-- Repay Button -->
+        <button 
+          id="goToPayFullBtn"
+          class="w-1/2 py-3 px-4 rounded-full bg-[#283593] text-white font-bold text-[17px] hover:bg-[#202b78] transition-all active:scale-95 text-center font-serif-app shadow-md"
+        >
+          Repay
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 2: RENEW PAYMENT (SCREENSHOT 4: AUTOMATIC 40% CALCULATION) -->
+    <!-- ========================================================================= -->
+    <div id="viewRenew" class="flex-1 flex flex-col justify-between pb-24 hidden">
+      
+      <!-- Top Bar (Screenshot 4) -->
+      <div class="bg-white px-4 py-3 flex items-center justify-between sticky top-0 z-20">
+        <button id="backFromRenewBtn" class="text-black p-1 focus:outline-none" title="Back">
+          <svg class="w-5 h-5 stroke-[2.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <h1 class="text-[19px] font-bold text-black font-serif-app tracking-wide">Renew Payment</h1>
+        <div class="w-5"></div>
+      </div>
+
+      <div class="space-y-3.5 pt-3">
+        
+        <!-- App Branding (Screenshot 4) -->
+        <div class="flex items-center space-x-3 px-4">
+          <div class="w-[46px] h-[46px] rounded-2xl overflow-hidden shadow-sm flex-shrink-0 bg-white border border-gray-100 flex items-center justify-center">
+            <img id="renewAppLogo" src="/assets/zen-money.svg" alt="App Logo" class="w-full h-full object-cover">
+          </div>
+          <h2 id="renewAppName" class="text-[21px] font-bold text-[#111827] font-serif-app">Zen Money</h2>
+        </div>
+
+        <!-- Renew Card (Screenshot 4: 40% Dynamic calculation) -->
+        <div class="mx-3.5 bg-white rounded-2xl px-5 py-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-gray-100/80">
+          
+          <div class="text-center pb-3">
+            <p class="text-[#6b7280] text-[14px] font-serif-app">Repayment Amount</p>
+            <h3 id="renewCalculatedAmount" class="text-[34px] font-bold text-[#283593] font-serif-app tracking-tight mt-0.5">
+              ₹ 5,016
+            </h3>
+          </div>
+
+          <!-- Rows List (Screenshot 4) -->
+          <div class="pt-3 space-y-3.5 text-[13.5px] font-sans-app">
+            <div class="flex justify-between items-center">
+              <span class="text-[#9ca3af]">Name</span>
+              <span id="renewCustNameVal" class="text-[#1f2937] font-semibold uppercase">BHAVIK KAMLESH SANGHVI</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <span class="text-[#9ca3af]">Loan Amount</span>
+              <span id="renewLoanAmountVal" class="text-[#1f2937] font-semibold">₹ 11,000</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <span class="text-[#9ca3af]">Late Fee</span>
+              <span id="renewLateFeeVal" class="text-[#1f2937] font-semibold">₹ 1,540</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <span class="text-[#9ca3af]">Renewal Day</span>
+              <span id="renewDaysVal" class="text-[#1f2937] font-semibold">7 Day</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <span class="text-[#9ca3af]">Renewal Fee</span>
+              <span id="renewFeeVal" class="text-[#1f2937] font-semibold">₹ 4,400</span>
+            </div>
+
+            <!-- Upward Chevron Caret (Screenshot 4) -->
+            <div class="pt-1 flex justify-center text-blue-600">
+              <svg class="w-5 h-5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"></path></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Repay Now Button (Screenshot 4: User requested solid blue button) -->
+        <div class="px-3.5">
+          <button 
+            id="goToPayRenewBtn"
+            class="w-full py-3.5 px-6 rounded-full bg-[#283593] text-white font-bold text-[18px] shadow-lg hover:bg-[#202b78] transition-all active:scale-[0.98] text-center font-serif-app"
+          >
+            Repay Now
+          </button>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="px-5 pt-1 space-y-2 text-[14px] leading-relaxed text-[#111827] font-serif-app">
+          <h4 class="font-bold text-[15px] text-[#111827]">Tips:</h4>
+          
+          <p>
+            <span class="text-[#e02424] font-bold">! ! ! &nbsp;One UPI</span> can only transfer money <span class="text-[#e02424] font-bold">ONCE.</span>
+          </p>
+          
+          <p>
+            <span class="text-[#e02424] font-bold">! ! ! &nbsp;DO NOT CHANGE</span> the payment <span class="text-[#e02424] font-bold">AMOUNT & UPI.</span>
+          </p>
+
+          <p>
+            <span class="text-[#e02424] font-bold">! ! ! &nbsp;DO NOT</span> transfer money in the <span class="text-[#e02424] font-bold">UPI</span> friend <span class="text-[#e02424] font-bold">CHAT</span> window again.
+          </p>
+
+          <p>
+            Otherwise, the order <span class="text-[#e02424] font-bold">CANNOT be completed.</span>
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 3: PAYMENT GATEWAY & QR — PIXEL-PERFECT v3 (CLOSE-UP SCREENSHOTS) -->
+    <!-- ========================================================================= -->
+    <div id="viewGateway" class="flex-1 flex flex-col" style="background:#f0eff5;">
+
+      <!-- ── TOP BAR ──────────────────────────────────────────────────────────── -->
+      <!-- Screenshot 1: Pure white bar, bold "< " left arrow, centered bold "Repay" -->
+      <div style="background:#ffffff;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;border-bottom:1.5px solid #f0f0f0;">
+        <button id="backFromGatewayBtn" style="background:none;border:none;cursor:pointer;padding:4px 2px;line-height:1;display:flex;align-items:center;" title="Back">
+          <!-- Bold chevron left arrow, thick stroke -->
+          <svg width="24" height="24" fill="none" stroke="#111" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:20px;font-weight:800;color:#0d0d0d;margin:0;letter-spacing:0.2px;">Repay</h1>
+        <div style="width:28px;"></div>
+      </div>
+
+      <!-- ── PURPLE TIMER BAR ─────────────────────────────────────────────────── -->
+      <!-- Screenshot 1: Deep purple #4a157c, clock icon, "6 : 51" spaced, हिंदी oval border -->
+      <div style="background:#4a157c;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:9px;">
+          <!-- Clock outline icon -->
+          <svg width="19" height="19" fill="none" stroke="#e2b8ff" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l3.5 2"/>
+          </svg>
+          <span id="countdownTimer" style="color:#ffffff;font-size:17px;font-weight:700;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:3px;">09 : 48</span>
+        </div>
+        <!-- हिंदी: oval border pill, NOT filled, border only -->
+        <button style="background:transparent;border:1.8px solid #d4aaff;color:#e8d5ff;border-radius:999px;padding:4px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Segoe UI',Roboto,sans-serif;letter-spacing:0.3px;">हिंदी</button>
+      </div>
+
+      <!-- ── BIG AMOUNT ───────────────────────────────────────────────────────── -->
+      <!-- Screenshot 1: White bg, very large bold purple amount centered, no border -->
+      <div style="background:#ffffff;text-align:center;padding:22px 16px 20px;">
+        <h2 id="gatewayAmountDisplay" style="font-family:Georgia,'Times New Roman',serif;font-size:36px;font-weight:800;color:#4a157c;margin:0;letter-spacing:-0.5px;">₹ 17160.00</h2>
+      </div>
+
+      <!-- ── CARDS SCROLL AREA ────────────────────────────────────────────────── -->
+      <div style="padding:12px 11px 20px;display:flex;flex-direction:column;gap:12px;">
+
+        <!-- ━━━━ CARD 1: Scan QR Code to Pay ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Screenshot 2: Lavender header (#ede9fe), white/off-white body, NO inner border on QR -->
+        <div style="background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 1px 8px rgba(80,0,160,0.09);border:1px solid #e5dff5;">
+          <!-- Lavender header row -->
+          <div style="background:#eeeaf8;padding:13px 16px;display:flex;align-items:center;gap:10px;">
+            <!-- QR bracket-corner icon (exact screenshot) -->
+            <svg width="21" height="21" fill="none" stroke="#5b21b6" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="square" d="M4 9V5h4"/>
+              <path stroke-linecap="square" d="M4 15v4h4"/>
+              <path stroke-linecap="square" d="M20 9V5h-4"/>
+              <path stroke-linecap="square" d="M20 15v4h-4"/>
+            </svg>
+            <span style="font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:700;color:#2d1854;">Scan QR Code to Pay</span>
+          </div>
+          <!-- QR body: very light lavender/white bg, QR centered, no extra border box -->
+          <div style="padding:20px 16px 22px;display:flex;justify-content:center;background:#f8f7fc;">
+            <img id="dynamicQrImg" src="" alt="QR Code" style="width:200px;height:200px;object-fit:contain;display:block;">
+          </div>
+        </div>
+
+        <!-- ━━━━ CARD 2: Pay via UPI App ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Exact Replica matching image_388e3f6b.png -->
+        <div style="background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 1px 8px rgba(80,0,160,0.08);border:1px solid #e5dff5;">
+          <!-- Lavender header row -->
+          <div style="background:#f6f3fc;padding:12px 16px;display:flex;align-items:center;gap:10px;">
+            <!-- Exact 4-shape icon from screenshot -->
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5b21b6" stroke-width="2.3">
+              <rect x="3" y="3" width="7" height="7" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="17.5" cy="6.5" r="3.5"/>
+              <rect x="3" y="14" width="7" height="7" rx="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="14" y="14" width="7" height="7" rx="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:17.5px;font-weight:700;color:#1e1b4b;letter-spacing:0.1px;">Pay via UPI App</span>
+          </div>
+          <!-- Two-column app buttons -->
+          <div style="padding:14px 10px 16px;display:grid;grid-template-columns:1fr 1fr;gap:9px;background:#ffffff;">
+
+            <!-- ═══ PAYTM BUTTON ═══ -->
+            <button id="paytmBtn"
+              type="button"
+              style="border:1.5px solid #d1cfe8;border-radius:14px;background:#ffffff;padding:12px 10px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.15s ease;width:100%;box-sizing:border-box;"
+              onmouseover="this.style.background='#fbfaff';this.style.borderColor='#9074d0';"
+              onmouseout="this.style.background='#ffffff';this.style.borderColor='#d1cfe8';">
+              <img src="/assets/paytm-logo.png" alt="Paytm Logo" style="height:19px;width:auto;object-fit:contain;flex-shrink:0;display:block;">
+              <span style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:18px;font-weight:700;color:#111827;letter-spacing:0.1px;white-space:nowrap;">Paytm</span>
+            </button>
+
+            <!-- ═══ PHONEPE BUTTON ═══ -->
+            <button id="phonepeBtn"
+              type="button"
+              style="border:1.5px solid #d1cfe8;border-radius:14px;background:#ffffff;padding:12px 10px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all 0.15s ease;width:100%;box-sizing:border-box;"
+              onmouseover="this.style.background='#fbfaff';this.style.borderColor='#9074d0';"
+              onmouseout="this.style.background='#ffffff';this.style.borderColor='#d1cfe8';">
+              <img src="/assets/phonepe-logo.png" alt="PhonePe Logo" style="width:28px;height:28px;border-radius:50%;object-fit:contain;flex-shrink:0;display:block;">
+              <span style="font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:18px;font-weight:700;color:#111827;letter-spacing:0.1px;white-space:nowrap;">PhonePe</span>
+            </button>
+
+          </div>
+        </div>
+
+        <!-- ━━━━ CARD 3: Manual Transfer 🔥 Recommended ━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Screenshot 4: Lavender header with pencil+text+badge, white body, big UPI ID label -->
+        <div style="background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 1px 8px rgba(80,0,160,0.08);border:1px solid #e5dff5;">
+          <!-- Lavender header row -->
+          <div style="background:#f6f3fc;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <!-- Pencil edit icon -->
+              <svg width="18" height="18" fill="none" stroke="#4a157c" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+              </svg>
+              <span style="font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:700;color:#1e1b4b;">Manual Transfer</span>
+            </div>
+            <!-- Recommended badge: orange-red rounded pill, 🔥 fire icon -->
+            <span style="background:#f05252;color:#ffffff;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:5px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;white-space:nowrap;">
+              <span style="font-size:13px;">🔥</span> Recommended
+            </span>
+          </div>
+
+          <!-- White body -->
+          <div style="padding:16px 16px 18px;background:#ffffff;">
+            <!-- UPI ID label: larger, bolder (matches screenshot 4 exactly) -->
+            <p style="font-family:Georgia,'Times New Roman',serif;font-size:14px;font-weight:700;color:#111111;margin:0 0 10px;letter-spacing:0.2px;">UPI ID</p>
+
+            <!-- UPI row: light gray bg rounded rect, Georgia UPI text, purple COPY rect button -->
+            <div style="display:flex;align-items:center;border:1.5px solid #ddd8ec;border-radius:12px;overflow:hidden;background:#ffffff;">
+              <span id="gatewayUpiText" style="font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:600;color:#1a1a2e;flex:1;padding:11px 14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Q60922****@ybl</span>
+              <!-- COPY: purple rectangle with slight radius -->
+              <button id="copyUpiBtn"
+                style="background:#4a157c;color:#ffffff;border:none;border-radius:8px;margin:4px 6px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:0.5px;transition:background 0.15s;"
+                onmouseover="this.style.background='#3b0f63'" onmouseout="this.style.background='#4a157c'">COPY</button>
+            </div>
+
+            <!-- Amber italic subtext -->
+            <p style="font-family:Georgia,'Times New Roman',serif;font-size:13px;color:#c2710c;font-weight:600;margin:9px 0 0;font-style:italic;">Get new UPI every time, do not save.</p>
+          </div>
+        </div>
+
+        <!-- ━━━━ CARD 4: 12-digit UTR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Screenshot 5: White card, bold title, input with * UTR prefix, validation msg, purple pill button -->
+        <div style="background:#ffffff;border-radius:18px;padding:16px;box-shadow:0 1px 8px rgba(80,0,160,0.08);border:1px solid #e5dff5;">
+          <!-- Title: 12-digit UTR bold -->
+          <h3 style="font-family:Georgia,'Times New Roman',serif;font-size:16px;font-weight:700;color:#111111;margin:0 0 12px;">12-digit UTR</h3>
+
+          <!-- Input wrapper: white bg, gray border, rounded -->
+          <div style="border:1.5px solid #ddd8ec;border-radius:12px;padding:0;background:#ffffff;overflow:hidden;" id="utrFieldWrapper">
+            <div style="display:flex;align-items:center;padding:12px 14px;">
+              <span style="color:#e53e3e;font-weight:800;margin-right:5px;font-size:16px;line-height:1;">*</span>
+              <span style="font-family:Georgia,'Times New Roman',serif;font-size:14px;font-weight:700;color:#374151;margin-right:12px;">UTR</span>
+              <input
+                type="text"
+                id="utrInput"
+                maxlength="12"
+                inputmode="numeric"
+                placeholder="Enter 12-digit UTR"
+                style="flex:1;border:none;outline:none;font-family:Georgia,'Times New Roman',serif;font-size:14.5px;font-weight:600;color:#1a1a2e;background:transparent;"
+              >
+            </div>
+            <!-- Inline validation: "Input 12 digits" in red when wrong length -->
+            <div id="utrValidationMsg" style="display:none;padding:0 14px 10px;font-family:Georgia,'Times New Roman',serif;font-size:13px;color:#e53e3e;font-weight:600;">Input 12 digits</div>
+          </div>
+
+          <!-- Amber subtext -->
+          <p style="font-family:Georgia,'Times New Roman',serif;font-size:13px;color:#c2710c;font-weight:600;margin:10px 0 14px;font-style:italic;">Complete payment first, then enter UTR here.</p>
+
+          <!-- Submit UTR: full-width purple pill button -->
+          <button
+            id="submitUtrBtn"
+            style="width:100%;padding:14px 16px;border-radius:999px;background:#4a157c;color:#ffffff;font-family:Georgia,'Times New Roman',serif;font-size:17px;font-weight:700;border:none;cursor:pointer;box-shadow:0 3px 12px rgba(74,21,124,0.3);transition:background 0.15s;letter-spacing:0.3px;"
+            onmouseover="this.style.background='#3b0f63'" onmouseout="this.style.background='#4a157c'"
+          >
+            Submit UTR
+          </button>
+        </div>
+
+        <!-- ━━━━ Warning Box ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Screenshot: White card, coral-red italic bold lines, no title -->
+        <div style="background:#ffffff;border-radius:18px;padding:15px 17px;box-shadow:0 1px 6px rgba(0,0,0,0.06);border:1px solid #fce8e8;">
+          <p style="font-family:Georgia,'Times New Roman',serif;font-size:13.5px;color:#e53e3e;font-style:italic;font-weight:700;margin:0 0 6px;">1.Please make sure you have installed the app.</p>
+          <p style="font-family:Georgia,'Times New Roman',serif;font-size:13.5px;color:#e53e3e;font-style:italic;font-weight:700;margin:0;">2.Don't pay for the same link repeatedly.</p>
+        </div>
+
+        <!-- ━━━━ Notice Box ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+        <!-- Screenshot: White card, bold "Notice:" title, gray body text -->
+        <div style="background:#ffffff;border-radius:18px;padding:16px 17px 18px;box-shadow:0 1px 6px rgba(0,0,0,0.06);border:1px solid #eeecf5;margin-bottom:10px;">
+          <h4 style="font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:800;color:#0d0d0d;margin:0 0 8px;">Notice:</h4>
+          <p style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13.5px;color:#4b5563;line-height:1.65;margin:0;">
+            1. Please select the payment method you need and make sure your phone has the corresponding wallet software installed.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- UTR Success Modal -->
+  <div id="utrSuccessModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl">
+      <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold">
+        ✓
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 mb-2 font-serif-app">Payment Submitted!</h3>
+      <p class="text-sm text-gray-600 mb-4 font-sans-app">
+        Your 12-digit UTR <span id="submittedUtrDisplay" class="font-bold text-gray-900 font-mono"></span> has been received and is under verification.
+      </p>
+      <button 
+        onclick="document.getElementById('utrSuccessModal').classList.add('hidden')"
+        class="w-full py-3 bg-[#54158c] text-white font-bold rounded-full shadow font-serif-app"
+      >
+        Done
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let currentCustomer = null;
+    let selectedAmountToPay = 0;
+    let activePaymentType = 'full';
+
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    const customerToken = pathParts[pathParts.length - 1] || 'pay78291';
+
+    function showToast(message, icon = '📋') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = message;
+      document.getElementById('toastIcon').innerText = icon;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.remove('opacity-0');
+        toast.classList.add('opacity-100');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+        setTimeout(() => toast.classList.add('hidden'), 300);
+      }, 2500);
+    }
+
+    const viewRepay = document.getElementById('viewRepay');
+    const viewRenew = document.getElementById('viewRenew');
+    const viewGateway = document.getElementById('viewGateway');
+
+    function showView(viewName) {
+      viewRepay.classList.add('hidden');
+      viewRenew.classList.add('hidden');
+      viewGateway.classList.add('hidden');
+
+      if (viewName === 'repay') {
+        viewRepay.classList.remove('hidden');
+      } else if (viewName === 'renew') {
+        viewRenew.classList.remove('hidden');
+      } else if (viewName === 'gateway') {
+        viewGateway.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setupGateway();
+      }
+    }
+
+    async function fetchCustomer() {
+      try {
+        const res = await fetch(`/api/customers/${customerToken}`);
+        if (res.ok) {
+          const data = await res.json();
+          currentCustomer = data.customer;
+        } else {
+          // Graceful fallback with demo data matching reference screenshots
+          currentCustomer = {
+            id: 'demo_' + customerToken,
+            token: customerToken,
+            appName: 'Zen Money',
+            appLogo: '/assets/zen-money.svg',
+            customerName: 'BHAVIK KAMLESH SANGHVI',
+            repaymentAmount: 17930,
+            loanAmount: 11000,
+            receivedAmount: 11000,
+            bankAddress: 'HDFC BANK, ANDHERI (W), MUMBAI - 746388853(ifsc:UHDK84738)',
+            amountPaid: 0,
+            overdueDays: 2,
+            lateFee: 1540,
+            amountReceivedDate: '23-10-2026',
+            dueDate: '30-10-2026',
+            renewalDays: 7,
+            renewalFee: 4400,
+            upiId: 'shah817478@ybl',
+            merchantName: 'Zen Money Pay'
+          };
+        }
+        renderData();
+      } catch (err) {
+        console.error('Error fetching customer:', err);
+        currentCustomer = {
+          id: 'demo_' + customerToken,
+          token: customerToken,
+          appName: 'Zen Money',
+          appLogo: '/assets/zen-money.svg',
+          customerName: 'BHAVIK KAMLESH SANGHVI',
+          repaymentAmount: 17930,
+          loanAmount: 11000,
+          receivedAmount: 11000,
+          bankAddress: 'HDFC BANK, ANDHERI (W), MUMBAI - 746388853(ifsc:UHDK84738)',
+          amountPaid: 0,
+          overdueDays: 2,
+          lateFee: 1540,
+          amountReceivedDate: '23-10-2026',
+          dueDate: '30-10-2026',
+          renewalDays: 7,
+          renewalFee: 4400,
+          upiId: 'shah817478@ybl',
+          merchantName: 'Zen Money Pay'
+        };
+        renderData();
+      }
+    }
+
+    function renderData() {
+      if (!currentCustomer) return;
+
+      const c = currentCustomer;
+      const formattedRepayAmount = Number(c.repaymentAmount).toLocaleString();
+      const renewAmount = c.calculatedRenewAmount || Math.round(c.repaymentAmount * 0.4);
+
+      // --- View 1 (Repay) ---
+      document.getElementById('mainAppName').innerText = c.appName;
+      document.getElementById('mainAppLogo').src = c.appLogo;
+      document.getElementById('mainRepaymentAmount').innerText = `₹ ${formattedRepayAmount}`;
+      document.getElementById('custNameVal').innerText = c.customerName;
+      document.getElementById('bankAddressVal').innerText = c.bankAddress || 'Not specified';
+      document.getElementById('receivedAmountVal').innerText = `₹ ${Number(c.receivedAmount).toLocaleString()}`;
+      document.getElementById('loanAmountVal').innerText = `₹ ${Number(c.loanAmount).toLocaleString()}`;
+      document.getElementById('amountPaidVal').innerText = `₹ ${Number(c.amountPaid).toLocaleString()}`;
+      document.getElementById('overdueDaysVal').innerText = `${c.overdueDays} Days`;
+      document.getElementById('lateFeeVal').innerText = `₹ ${Number(c.lateFee).toLocaleString()}`;
+      document.getElementById('receivedDateVal').innerText = c.amountReceivedDate;
+      document.getElementById('dueDateVal').innerText = c.dueDate;
+
+      // --- View 2 (Renew) ---
+      document.getElementById('renewAppName').innerText = c.appName;
+      document.getElementById('renewAppLogo').src = c.appLogo;
+      document.getElementById('renewCalculatedAmount').innerText = `₹ ${Number(renewAmount).toLocaleString()}`;
+      document.getElementById('renewCustNameVal').innerText = c.customerName;
+      document.getElementById('renewLoanAmountVal').innerText = `₹ ${Number(c.loanAmount).toLocaleString()}`;
+      document.getElementById('renewLateFeeVal').innerText = `₹ ${Number(c.lateFee).toLocaleString()}`;
+      document.getElementById('renewDaysVal').innerText = `${c.renewalDays || 7} Day`;
+      document.getElementById('renewFeeVal').innerText = `₹ ${Number(c.renewalFee || Math.round(c.loanAmount * 0.4)).toLocaleString()}`;
+
+      if (c.submittedUtr) {
+        document.getElementById('utrInput').value = c.submittedUtr;
+      }
+
+      // Default amount to full repayment amount
+      if (!selectedAmountToPay) {
+        selectedAmountToPay = c.repaymentAmount;
+      }
+
+      // Check URL query parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('view') === 'repay') {
+        showView('repay');
+      } else if (urlParams.get('view') === 'renew') {
+        showView('renew');
+      } else {
+        showView('gateway');
+      }
+    }
+
+    document.getElementById('goToRenewBtn').addEventListener('click', () => {
+      showView('renew');
+    });
+
+    document.getElementById('backFromRenewBtn').addEventListener('click', () => {
+      showView('repay');
+    });
+
+    document.getElementById('goToPayFullBtn').addEventListener('click', () => {
+      activePaymentType = 'full';
+      selectedAmountToPay = currentCustomer.repaymentAmount;
+      showView('gateway');
+    });
+
+    document.getElementById('goToPayRenewBtn').addEventListener('click', () => {
+      activePaymentType = 'renew';
+      selectedAmountToPay = currentCustomer.calculatedRenewAmount || Math.round(currentCustomer.repaymentAmount * 0.4);
+      showView('gateway');
+    });
+
+    document.getElementById('backFromGatewayBtn').addEventListener('click', () => {
+      if (activePaymentType === 'renew') {
+        showView('renew');
+      } else {
+        showView('repay');
+      }
+    });
+
+    async function setupGateway() {
+      if (!currentCustomer) return;
+
+      const amt = Number(selectedAmountToPay || currentCustomer.repaymentAmount).toFixed(2);
+      document.getElementById('gatewayAmountDisplay').innerText = `₹ ${amt}`;
+
+      // Mask UPI display (e.g. Q60922****@ybl or shah81****@ybl) as shown in reference screenshots
+      const upi = currentCustomer.upiId || 'Q609224859@ybl';
+      let maskedUpi = upi;
+      const atIdx = upi.indexOf('@');
+      if (atIdx > 6) {
+        maskedUpi = upi.substring(0, 6) + '****' + upi.substring(atIdx);
+      }
+      document.getElementById('gatewayUpiText').innerText = maskedUpi;
+
+      try {
+        const qrUrl = `/api/qrcode?upi=${encodeURIComponent(currentCustomer.upiId)}&amount=${amt}&name=${encodeURIComponent(currentCustomer.appName)}`;
+        const res = await fetch(qrUrl);
+        const data = await res.json();
+        if (data.qrDataUrl) {
+          document.getElementById('dynamicQrImg').src = data.qrDataUrl;
+        }
+      } catch (err) {
+        console.error('Failed to load QR code:', err);
+      }
+    }
+
+    function copyUpiId() {
+      if (!currentCustomer) return;
+      navigator.clipboard.writeText(currentCustomer.upiId);
+      showToast('UPI ID Copied to clipboard!', '✓');
+
+      const copyBtn = document.getElementById('copyUpiBtn');
+      const original = copyBtn.innerText;
+      copyBtn.innerText = 'COPIED!';
+      setTimeout(() => copyBtn.innerText = original, 1500);
+    }
+
+    document.getElementById('copyUpiBtn').addEventListener('click', copyUpiId);
+
+    document.getElementById('paytmBtn').addEventListener('click', () => {
+      copyUpiId();
+      showToast('Paytm UPI ID Copied! Pay from app.', '📱');
+      window.location.href = `upi://pay?pa=${currentCustomer.upiId}&pn=${encodeURIComponent(currentCustomer.appName)}&am=${selectedAmountToPay}&cu=INR`;
+    });
+
+    document.getElementById('phonepeBtn').addEventListener('click', () => {
+      copyUpiId();
+      showToast('PhonePe UPI ID Copied! Pay from app.', '📱');
+      window.location.href = `upi://pay?pa=${currentCustomer.upiId}&pn=${encodeURIComponent(currentCustomer.appName)}&am=${selectedAmountToPay}&cu=INR`;
+    });
+
+    // UTR input: show inline "Input 12 digits" validation msg (screenshot 5)
+    document.getElementById('utrInput').addEventListener('input', function() {
+      const val = this.value.trim();
+      const msg = document.getElementById('utrValidationMsg');
+      if (msg) {
+        if (val.length > 0 && val.length < 12) {
+          msg.style.display = 'block';
+        } else {
+          msg.style.display = 'none';
+        }
+      }
+    });
+
+    document.getElementById('submitUtrBtn').addEventListener('click', async () => {
+      const utr = document.getElementById('utrInput').value.trim();
+      const msg = document.getElementById('utrValidationMsg');
+      if (!/^\d{12}$/.test(utr)) {
+        if (msg) msg.style.display = 'block';
+        return;
+      }
+      if (msg) msg.style.display = 'none';
+
+      const btn = document.getElementById('submitUtrBtn');
+      btn.disabled = true;
+      btn.innerText = 'Submitting...';
+
+      try {
+        const res = await fetch(`/api/customers/${customerToken}/submit-utr`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ utr })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          document.getElementById('submittedUtrDisplay').innerText = utr;
+          document.getElementById('utrSuccessModal').classList.remove('hidden');
+        } else {
+          alert(data.error || 'Failed to submit UTR');
+        }
+      } catch (err) {
+        alert('Network error submitting UTR');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Submit UTR';
+      }
+    });
+
+    let totalSeconds = 9 * 60 + 48;
+    function startTimer() {
+      const timerEl = document.getElementById('countdownTimer');
+      setInterval(() => {
+        if (totalSeconds > 0) {
+          totalSeconds--;
+          const m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+          const s = (totalSeconds % 60).toString().padStart(2, '0');
+          timerEl.innerText = `${m} : ${s}`;
+        }
+      }, 1000);
+    }
+    startTimer();
+
+    fetchCustomer();
+  </script>
+</body>
+</html>

@@ -4,6 +4,9 @@
   "description": "Customer Loan Portal & Admin Dashboard",
   "main": "server.js",
   "scripts": {
+    "dev": "node server.js",
+    "build": "echo 'No build required'",
+    "lint": "node --check server.js",
     "start": "node server.js"
   },
   "keywords": ["loan", "portal", "admin", "dashboard", "upi"],
